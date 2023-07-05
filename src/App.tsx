@@ -11,6 +11,7 @@ import { PlayerContextProvider } from "./contexts/playerContext"
 import { UserProvider } from "./contexts/userContext"
 import { WebsocketProvider } from "./contexts/websocketContext"
 import { GameMenuProvider } from "./contexts/gameMenuContext"
+import { GameProvider } from "./contexts/gameContext"
 
 const App: React.FC = () => {
     const muiTheme = useMuiTheme()
@@ -22,14 +23,16 @@ const App: React.FC = () => {
                     <WebsocketProvider>
                         <UserProvider>
                             <PlayerContextProvider>
-                                <GameMenuProvider>
-                                    <Snackbar />
-                                    <Routes>
-                                        <Route index element={<Login />} />
-                                        <Route path="*" element={<Login />} />
-                                        <Route path="/game" element={<Game />} />
-                                    </Routes>
-                                </GameMenuProvider>
+                                <GameProvider>
+                                    <GameMenuProvider>
+                                        <Snackbar />
+                                        <Routes>
+                                            <Route index element={<Login />} />
+                                            <Route path="*" element={<Login />} />
+                                            <Route path="/game" element={<Game />} />
+                                        </Routes>
+                                    </GameMenuProvider>
+                                </GameProvider>
                             </PlayerContextProvider>
                         </UserProvider>
                     </WebsocketProvider>

@@ -6,14 +6,14 @@ import { Status } from "../../components/Status"
 import { ContextUi } from "../../components/ContextUi"
 import { useGameMenu } from "../../hooks/useGameMenu"
 import { GameMenu } from "../../components/GameMenu"
+import { useGame } from "../../hooks/useGame"
 
 interface GameProps {}
 
 export const Game: React.FC<GameProps> = ({}) => {
     const player = usePlayer()
+    const { gameInstance, sceneInstance, game, scene } = useGame()
     const gameMenu = useGameMenu()
-    const gameInstance = useRef<Phaser.Game>()
-    const sceneInstance = useRef<MainScene>()
 
     useLayoutEffect(() => {
         if (!gameInstance.current) {
@@ -55,19 +55,17 @@ export const Game: React.FC<GameProps> = ({}) => {
     }, [sceneInstance.current])
 
     useEffect(() => {
-        if (sceneInstance.current?.player) {
-            const game = sceneInstance.current
-            game.player.syncReact(player)
+        if (scene?.player) {
+            scene.player.syncReact(player)
         }
     }, [player])
 
     useEffect(() => {
-        const game = sceneInstance.current
-        if (game) {
+        if (scene) {
             if (gameMenu.open) {
-                game.game.pause()
+                scene.game.pause()
             } else {
-                game.game.resume()
+                scene.game.resume()
             }
         }
     }, [gameMenu.open])
