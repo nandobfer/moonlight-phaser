@@ -31,7 +31,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
                 }
 
                 return (
-                    <Formik initialValues={initialValues} onSubmit={handleSubmit} key={stat.id}>
+                    <Formik initialValues={initialValues} onSubmit={handleSubmit} key={stat.id} enableReinitialize>
                         {({ values, handleChange }) => (
                             <Form style={{ display: "flex" }}>
                                 <TextField
@@ -51,7 +51,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
 
             <Formik initialValues={player.position} onSubmit={(values) => player.setPosition(values)} enableReinitialize>
                 {({ values, handleChange }) => (
-                    <Form style={{ display: "flex", gap: "1vw" }}>
+                    <Form style={{ display: "flex", flexDirection: "row", gap: "1vw" }}>
                         <TextField label={"x"} name="x" value={values.x} onChange={handleChange} variant="standard" />
                         <TextField label={"y"} name="y" value={values.y} onChange={handleChange} variant="standard" />
                         <Button type="submit" sx={{}} variant="contained">

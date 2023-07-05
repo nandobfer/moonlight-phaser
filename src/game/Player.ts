@@ -16,6 +16,13 @@ export class Player {
         this.sprite.setFrame(55)
     }
 
+    syncReact(player: ReactPlayer): void {
+        this.health = player.health
+        this.maxHealth = player.maxHealth
+        this.speed = player.speed
+        this.sprite.setPosition(player.position.x, player.position.y)
+    }
+
     getPosition(): Phaser.Math.Vector2 {
         return this.sprite.getBottomCenter()
     }

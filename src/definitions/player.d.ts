@@ -12,3 +12,5 @@ declare interface Player {
     }
     setPosition: (position: { x: number; y: number }) => void
 }
+
+declare interface ReactPlayer extends Player {}

@@ -45,6 +45,13 @@ export const Game: React.FC<GameProps> = ({}) => {
         }
     }, [sceneInstance.current])
 
+    useEffect(() => {
+        if (sceneInstance.current?.player) {
+            const game = sceneInstance.current
+            game.player.syncReact(player)
+        }
+    }, [player])
+
     return (
         <Box sx={{ position: "relative" }}>
             <Box

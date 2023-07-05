@@ -9,7 +9,7 @@ export default class MainScene extends Phaser.Scene {
     static readonly TILE_SIZE = 48
     private dot!: Phaser.Physics.Arcade.Sprite
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-    private player!: Player
+    public player!: Player
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
 
