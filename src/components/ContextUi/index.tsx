@@ -49,7 +49,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
                 )
             })}
 
-            <Formik initialValues={player.position} onSubmit={(values) => player.setPosition(values)}>
+            <Formik initialValues={player.position} onSubmit={(values) => player.setPosition(values)} enableReinitialize>
                 {({ values, handleChange }) => (
                     <Form style={{ display: "flex", gap: "1vw" }}>
                         <TextField label={"x"} name="x" value={values.x} onChange={handleChange} variant="standard" />

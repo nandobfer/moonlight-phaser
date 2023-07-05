@@ -33,7 +33,7 @@ export default class MainScene extends Phaser.Scene {
         playerSprite.scale = 1
         this.cameras.main.startFollow(playerSprite)
         this.cameras.main.roundPixels = true
-        this.player = new Player(playerSprite, new Phaser.Math.Vector2(6, 6))
+        this.player = new Player(playerSprite, new Phaser.Math.Vector2(6, 6), this)
 
         this.gridPhysics = new GridPhysics(this.player)
         this.gridControls = new GridControls(this.input, this.gridPhysics)

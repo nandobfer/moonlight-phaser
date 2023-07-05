@@ -1,9 +1,13 @@
+import { initialPlayer } from "../mocs/player"
 import MainScene from "./mainScene"
 
 export class Player {
-    public speed: number = 2
+    public speed: number = initialPlayer.speed
+    public maxHealth: number = initialPlayer.maxHealth
+    public health: number = initialPlayer.health
+    public position: object = initialPlayer.position
 
-    constructor(private sprite: Phaser.GameObjects.Sprite, private tilePos: Phaser.Math.Vector2) {
+    constructor(private sprite: Phaser.GameObjects.Sprite, private tilePos: Phaser.Math.Vector2, private scene: MainScene) {
         const offsetX = MainScene.TILE_SIZE / 2
         const offsetY = MainScene.TILE_SIZE
 
@@ -18,5 +22,6 @@ export class Player {
 
     setPosition(position: Phaser.Math.Vector2): void {
         this.sprite.setPosition(position.x, position.y)
+        this.scene.events.emit("setPosition", { x: position.x, y: position.y })
     }
 }

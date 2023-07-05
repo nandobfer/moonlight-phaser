@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Phaser from "phaser"
 import MainScene from "./game/mainScene"
 import { usePlayer } from "./hooks/usePlayer"
@@ -24,22 +24,28 @@ const App: React.FC = () => {
                 physics: {
                     default: "arcade",
                 },
-                // backgroundColor: "#2494C2",
-                scene: {
-                    create: function () {
-                        sceneInstance.current = new MainScene()
-                        this.scene.add("MainScene", sceneInstance.current, true)
-                    },
-                },
+                scene: [MainScene],
             }
             gameInstance.current = new Phaser.Game(config)
         }
-
-        if (sceneInstance.current) {
-            sceneInstance.current.updateSpeed(player.speed)
-            sceneInstance.current.updatePosition(player.position)
+        if (gameInstance.current) {
+            sceneInstance.current = gameInstance.current.scene.keys.MainScene as MainScene
         }
-    }, [player])
+    }, [])
+
+    useEffect(() => {
+        if (sceneInstance.current) {
+            sceneInstance.current.events.on("setPosition", (newPosition: { x: number; y: number }) => {
+                player.setPosition(newPosition)
+            })
+        }
+
+        return () => {
+            if (sceneInstance.current) {
+                sceneInstance.current.events.off("setPosition")
+            }
+        }
+    }, [])
 
     return (
         <ThemeProvider theme={muiTheme}>

@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import React from "react"
+import { initialPlayer } from "../mocs/player"
 
 interface PlayerContextContextValue {
     player: Player
@@ -14,8 +15,8 @@ const PlayerContextContext = createContext<PlayerContextContextValue>({} as Play
 export default PlayerContextContext
 
 export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ children }) => {
-    const [speed, setSpeed] = useState<number>(2)
-    const [maxHealth, setMaxHealth] = useState(10)
+    const [speed, setSpeed] = useState<number>(initialPlayer.speed)
+    const [maxHealth, setMaxHealth] = useState(initialPlayer.maxHealth)
     const [health, setHealth] = useState(maxHealth)
     const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
 

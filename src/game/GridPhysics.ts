@@ -7,7 +7,7 @@ type Vector2 = Phaser.Math.Vector2
 
 export class GridPhysics {
     private movementDirection: Direction = Direction.NONE
-    private readonly speedPixelsPerSecond: number = MainScene.TILE_SIZE * 4
+    private readonly speedPixelsPerSecond: number = MainScene.TILE_SIZE
     private movementDirectionVectors: {
         [key in Direction]?: Vector2
     } = {
@@ -68,7 +68,7 @@ export class GridPhysics {
 
     private getPixelsToWalkThisUpdate(delta: number): number {
         const deltaInSeconds = delta / 1000
-        return this.speedPixelsPerSecond * deltaInSeconds
+        return this.speedPixelsPerSecond * deltaInSeconds * this.player.speed
     }
 
     private stopMoving(): void {
