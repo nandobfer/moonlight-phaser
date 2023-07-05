@@ -2,15 +2,17 @@ import React, { useContext, useEffect, useRef } from "react"
 import Phaser from "phaser"
 import MainScene from "./game/mainScene"
 import { usePlayer } from "./hooks/usePlayer"
-import { Box, Button } from "@mui/material"
+import { Box, Button, ThemeProvider } from "@mui/material"
 import { Status } from "./components/Status"
 import { ContextUi } from "./components/ContextUi"
 import "./sass/all.scss"
+import { useMuiTheme } from "./hooks/useMuiTheme"
 
 const App: React.FC = () => {
     const player = usePlayer()
     const gameInstance = useRef<Phaser.Game>()
     const sceneInstance = useRef<MainScene>()
+    const muiTheme = useMuiTheme()
 
     useEffect(() => {
         if (!gameInstance.current) {
@@ -40,21 +42,28 @@ const App: React.FC = () => {
     }, [player])
 
     return (
-        <Box sx={{ position: "relative" }}>
-            <Box
-                sx={{ position: "absolute", width: window.innerWidth, height: window.innerHeight, border: "1px solid red" }}
-            >
-                <Status />
-                <ContextUi />
+        <ThemeProvider theme={muiTheme}>
+            <Box sx={{ position: "relative" }}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                        border: "1px solid red",
+                    }}
+                >
+                    <Status />
+                    <ContextUi />
+                </Box>
+                <Box
+                    id="game-container"
+                    sx={{
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                    }}
+                />
             </Box>
-            <Box
-                id="game-container"
-                sx={{
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                }}
-            />
-        </Box>
+        </ThemeProvider>
     )
 }
 

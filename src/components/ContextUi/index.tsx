@@ -11,7 +11,6 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
     return (
         <Box
             sx={{
-                backgroundColor: "white",
                 padding: "1vw",
                 flexDirection: "column",
                 position: "absolute",
@@ -42,6 +41,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
                                     onChange={handleChange}
                                     type="number"
                                     fullWidth
+                                    variant="standard"
                                 />
                             </Form>
                         )}
@@ -52,8 +52,8 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
             <Formik initialValues={player.position} onSubmit={(values) => player.setPosition(values)}>
                 {({ values, handleChange }) => (
                     <Form style={{ display: "flex", gap: "1vw" }}>
-                        <TextField label={"x"} name="x" value={values.x} onChange={handleChange} />
-                        <TextField label={"y"} name="y" value={values.y} onChange={handleChange} />
+                        <TextField label={"x"} name="x" value={values.x} onChange={handleChange} variant="standard" />
+                        <TextField label={"y"} name="y" value={values.y} onChange={handleChange} variant="standard" />
                         <Button type="submit" sx={{}} variant="contained">
                             ok
                         </Button>
