@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useLayoutEffect, useRef } from "react"
 import { usePlayer } from "../../hooks/usePlayer"
 import MainScene from "../../game/mainScene"
 import { Box } from "@mui/material"
@@ -12,7 +12,7 @@ export const Game: React.FC<GameProps> = ({}) => {
     const gameInstance = useRef<Phaser.Game>()
     const sceneInstance = useRef<MainScene>()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!gameInstance.current) {
             const config: Phaser.Types.Core.GameConfig = {
                 type: Phaser.AUTO,
@@ -26,12 +26,12 @@ export const Game: React.FC<GameProps> = ({}) => {
             }
             gameInstance.current = new Phaser.Game(config)
         }
-        if (gameInstance.current) {
-            sceneInstance.current = gameInstance.current.scene.keys.MainScene as MainScene
-        }
+
+        sceneInstance.current = gameInstance.current.scene.keys.MainScene as MainScene
     }, [])
 
     useEffect(() => {
+        console.log(sceneInstance.current)
         if (sceneInstance.current) {
             sceneInstance.current.events.on("setPosition", (newPosition: { x: number; y: number }) => {
                 player.setPosition(newPosition)
@@ -43,7 +43,7 @@ export const Game: React.FC<GameProps> = ({}) => {
                 sceneInstance.current.events.off("setPosition")
             }
         }
-    }, [])
+    }, [sceneInstance.current])
 
     return (
         <Box sx={{ position: "relative" }}>
