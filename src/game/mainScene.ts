@@ -9,6 +9,7 @@ export default class MainScene extends Phaser.Scene {
     static readonly TILE_SIZE = 48
     private dot!: Phaser.Physics.Arcade.Sprite
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+    private escKey!: Phaser.Input.Keyboard.Key
     public player!: Player
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
@@ -26,6 +27,7 @@ export default class MainScene extends Phaser.Scene {
 
     create() {
         this.cursors = this.input.keyboard!.createCursorKeys()
+        this.escKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
         this.dot = this.physics.add.sprite(400, 300, "").setCircle(10)
 
         const playerSprite = this.add.sprite(0, 0, "player")
@@ -46,6 +48,10 @@ export default class MainScene extends Phaser.Scene {
     updatePosition(newPosition: { x: number; y: number }) {}
 
     update(_time: number, delta: number) {
+        if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+            console.log("game")
+            this.events.emit("gameMenu")
+        }
         this.gridControls.update()
         this.gridPhysics.update(delta)
     }

@@ -4,11 +4,14 @@ import MainScene from "../../game/mainScene"
 import { Box } from "@mui/material"
 import { Status } from "../../components/Status"
 import { ContextUi } from "../../components/ContextUi"
+import { useGameMenu } from "../../hooks/useGameMenu"
+import { GameMenu } from "../../components/GameMenu"
 
 interface GameProps {}
 
 export const Game: React.FC<GameProps> = ({}) => {
     const player = usePlayer()
+    const gameMenu = useGameMenu()
     const gameInstance = useRef<Phaser.Game>()
     const sceneInstance = useRef<MainScene>()
 
@@ -31,16 +34,22 @@ export const Game: React.FC<GameProps> = ({}) => {
     }, [])
 
     useEffect(() => {
-        console.log(sceneInstance.current)
         if (sceneInstance.current) {
             sceneInstance.current.events.on("setPosition", (newPosition: { x: number; y: number }) => {
                 player.setPosition(newPosition)
             })
         }
 
+        if (sceneInstance.current) {
+            sceneInstance.current.events.on("gameMenu", () => {
+                gameMenu.setOpen(true)
+            })
+        }
+
         return () => {
             if (sceneInstance.current) {
                 sceneInstance.current.events.off("setPosition")
+                sceneInstance.current.events.off("gameMenu")
             }
         }
     }, [sceneInstance.current])
@@ -51,6 +60,17 @@ export const Game: React.FC<GameProps> = ({}) => {
             game.player.syncReact(player)
         }
     }, [player])
+
+    useEffect(() => {
+        const game = sceneInstance.current
+        if (game) {
+            if (gameMenu.open) {
+                game.game.pause()
+            } else {
+                game.game.resume()
+            }
+        }
+    }, [gameMenu.open])
 
     return (
         <Box sx={{ position: "relative" }}>
@@ -64,6 +84,7 @@ export const Game: React.FC<GameProps> = ({}) => {
             >
                 <Status />
                 <ContextUi />
+                <GameMenu />
             </Box>
             <Box
                 id="game-container"
