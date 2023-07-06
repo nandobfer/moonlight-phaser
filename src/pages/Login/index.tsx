@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../../hooks/useUser"
 import { useWebsocket } from "../../hooks/useWebsocket"
+import { useGame } from "../../hooks/useGame"
 
 interface LoginProps {}
 

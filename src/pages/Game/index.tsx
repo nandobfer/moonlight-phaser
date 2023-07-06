@@ -7,52 +7,51 @@ import { ContextUi } from "../../components/ContextUi"
 import { useGameMenu } from "../../hooks/useGameMenu"
 import { GameMenu } from "../../components/GameMenu"
 import { useGame } from "../../hooks/useGame"
+import { useLocation } from "react-router-dom"
 
 interface GameProps {}
 
 export const Game: React.FC<GameProps> = ({}) => {
+    const location = useLocation()
     const player = usePlayer()
-    const { gameInstance, sceneInstance, game, scene } = useGame()
     const gameMenu = useGameMenu()
-
-    useLayoutEffect(() => {
-        if (!gameInstance.current) {
-            const config: Phaser.Types.Core.GameConfig = {
-                type: Phaser.AUTO,
-                width: window.innerWidth,
-                height: window.innerHeight,
-                parent: "game-container",
-                physics: {
-                    default: "arcade",
-                },
-                scene: [MainScene],
-            }
-            gameInstance.current = new Phaser.Game(config)
-        }
-
-        sceneInstance.current = gameInstance.current.scene.keys.MainScene as MainScene
-    }, [])
+    const { gameInstance, sceneInstance, game, scene, setGameInstance, setSceneInstance } = useGame()
 
     useEffect(() => {
-        if (sceneInstance.current) {
-            sceneInstance.current.events.on("setPosition", (newPosition: { x: number; y: number }) => {
+        if (gameInstance) {
+            const canvas = document.getElementById("game-container")?.firstChild as HTMLCanvasElement
+            if (canvas) {
+                canvas.tabIndex = 1 // Make the canvas focusable
+                canvas.focus()
+                // Add a click event listener to refocus the canvas
+                const refocus = () => canvas.focus()
+                canvas.addEventListener("click", refocus)
+                // Remember to remove the event listener on cleanup
+                return () => canvas.removeEventListener("click", refocus)
+            }
+        }
+    }, [gameInstance])
+
+    useEffect(() => {
+        if (sceneInstance) {
+            sceneInstance.events.on("setPosition", (newPosition: { x: number; y: number }) => {
                 player.setPosition(newPosition)
             })
         }
 
-        if (sceneInstance.current) {
-            sceneInstance.current.events.on("gameMenu", () => {
+        if (sceneInstance) {
+            sceneInstance.events.on("gameMenu", () => {
                 gameMenu.setOpen(true)
             })
         }
 
         return () => {
-            if (sceneInstance.current) {
-                sceneInstance.current.events.off("setPosition")
-                sceneInstance.current.events.off("gameMenu")
+            if (sceneInstance) {
+                sceneInstance.events.off("setPosition")
+                sceneInstance.events.off("gameMenu")
             }
         }
-    }, [sceneInstance.current])
+    }, [sceneInstance])
 
     useEffect(() => {
         if (scene?.player) {
@@ -69,6 +68,31 @@ export const Game: React.FC<GameProps> = ({}) => {
             }
         }
     }, [gameMenu.open])
+
+    useEffect(() => {
+        console.log("mounted")
+        if (!gameInstance) {
+            console.log("creating game")
+            const config: Phaser.Types.Core.GameConfig = {
+                type: Phaser.AUTO,
+                width: window.innerWidth,
+                height: window.innerHeight,
+                parent: "game-container",
+                physics: {
+                    default: "arcade",
+                },
+                scene: [MainScene],
+            }
+            setGameInstance(new Phaser.Game(config))
+        }
+
+        return () => {
+            console.log("unmounting")
+            gameInstance?.destroy(true)
+            setGameInstance(undefined)
+            setSceneInstance(undefined)
+        }
+    }, [])
 
     return (
         <Box sx={{ position: "relative" }}>

@@ -32,7 +32,7 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     }
 
     useEffect(() => {
-        console.log({ player })
+        // console.log({ player })
     }, [player])
 
     return <PlayerContextContext.Provider value={{ player }}>{children}</PlayerContextContext.Provider>

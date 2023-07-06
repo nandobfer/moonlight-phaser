@@ -13,7 +13,7 @@ export class Player {
 
         this.sprite.setOrigin(0.5, 1)
         this.sprite.setPosition(tilePos.x * MainScene.TILE_SIZE + offsetX, tilePos.y * MainScene.TILE_SIZE + offsetY)
-        this.sprite.setFrame(55)
+        this.sprite.setFrame(58)
     }
 
     syncReact(player: ReactPlayer): void {

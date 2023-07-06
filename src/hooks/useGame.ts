@@ -3,8 +3,8 @@ import GameContext from "../contexts/gameContext"
 
 export const useGame = () => {
     const gameContext = useContext(GameContext)
-    const game = gameContext.gameInstance.current
-    const scene = gameContext.sceneInstance.current
+    const game = gameContext.gameInstance
+    const scene = gameContext.sceneInstance
 
     return { ...gameContext, game, scene }
 }

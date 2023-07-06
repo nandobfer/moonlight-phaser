@@ -16,6 +16,7 @@ const styles: Styles = {
         borderBottom: `1px solid ${colors.border}`,
     },
     content: {
+        flexDirection: "column",
         padding: "1vw!important",
         width: "40vw",
         backgroundColor: colors.background,

@@ -13,6 +13,7 @@ export default class MainScene extends Phaser.Scene {
     public player!: Player
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
+    public ready = false
 
     constructor() {
         super("MainScene")
@@ -39,6 +40,8 @@ export default class MainScene extends Phaser.Scene {
 
         this.gridPhysics = new GridPhysics(this.player)
         this.gridControls = new GridControls(this.input, this.gridPhysics)
+
+        this.ready = true
     }
 
     updateSpeed(newSpeed: number) {
