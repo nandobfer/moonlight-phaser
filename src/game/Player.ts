@@ -1,4 +1,5 @@
 import { initialPlayer } from "../mocs/player"
+import { Direction } from "./Direction"
 import MainScene from "./mainScene"
 
 export class Player {
@@ -14,6 +15,18 @@ export class Player {
         this.sprite.setOrigin(0.5, 1)
         this.sprite.setPosition(tilePos.x * MainScene.TILE_SIZE + offsetX, tilePos.y * MainScene.TILE_SIZE + offsetY)
         this.sprite.setFrame(58)
+    }
+
+    stopAnimation() {
+        if (this.sprite.anims.currentAnim) {
+            const standingFrame = this.sprite.anims.currentAnim.frames[1].frame.name
+            this.sprite.anims.stop()
+            this.sprite.setFrame(standingFrame)
+        }
+    }
+
+    startAnimation(direction: Direction) {
+        this.sprite.anims.play(direction)
     }
 
     syncReact(player: ReactPlayer): void {

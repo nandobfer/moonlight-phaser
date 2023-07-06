@@ -55,12 +55,30 @@ export default class MainScene extends Phaser.Scene {
 
         // this.cameras.main.postFX.addPixelate(8)
 
+        this.createPlayerAnimation(Direction.UP, 93, 95)
+        this.createPlayerAnimation(Direction.RIGHT, 81, 83)
+        this.createPlayerAnimation(Direction.DOWN, 57, 59)
+        this.createPlayerAnimation(Direction.LEFT, 69, 71)
+
         this.ready = true
     }
 
-    updateSpeed(newSpeed: number) {
-        this.player.speed = newSpeed
-    }
+    private createPlayerAnimation(
+        name: string,
+        startFrame: number,
+        endFrame: number
+      ) {
+        this.anims.create({
+          key: name,
+          frames: this.anims.generateFrameNumbers("player", {
+            start: startFrame,
+            end: endFrame,
+          }),
+          frameRate: 10,
+          repeat: -1,
+          yoyo: true,
+        });
+      }
 
     updatePosition(newPosition: { x: number; y: number }) {}
 
