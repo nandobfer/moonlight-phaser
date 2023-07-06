@@ -1,4 +1,5 @@
-export const initialPlayer = {
+export const initialPlayer: GamePlayer = {
+    id: 0,
     health: 10,
     maxHealth: 10,
     position: {

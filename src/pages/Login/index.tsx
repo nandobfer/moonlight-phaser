@@ -5,8 +5,6 @@ import { useApi } from "../../hooks/useApi"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../../hooks/useUser"
-import { useWebsocket } from "../../hooks/useWebsocket"
-import { useGame } from "../../hooks/useGame"
 
 interface LoginProps {}
 
@@ -18,7 +16,7 @@ interface LoginForm {
 export const Login: React.FC<LoginProps> = ({}) => {
     const api = useApi()
     const navigate = useNavigate()
-    const websocket = useWebsocket()
+    // const websocket = useWebsocket()
 
     const { setUser } = useUser()
     const { snackbar } = useSnackbar()
@@ -41,7 +39,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                 if (user) {
                     navigate("/game")
                     setUser(user)
-                    websocket.send({ connect: user })
+                    // websocket.send({ connect: { user } })
                 } else {
                     snackbar({
                         severity: "error",

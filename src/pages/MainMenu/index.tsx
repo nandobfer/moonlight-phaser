@@ -12,6 +12,10 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
         navigate("/game")
     }
 
+    const handleLogin = () => {
+        navigate("/login")
+    }
+
     return (
         <Paper
             sx={{
@@ -23,10 +27,14 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                 backgroundPosition: "center",
                 flexDirection: "column",
                 padding: "5vw",
+                gap: "2vw",
             }}
         >
             <Button variant="contained" onClick={() => handlePlay()}>
                 play
+            </Button>
+            <Button variant="contained" onClick={() => handleLogin()}>
+                login
             </Button>
         </Paper>
     )

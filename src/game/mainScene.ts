@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import { initialPlayer } from "../mocs/player"
 import { Player } from "./Player"
 import playerSprite from "../assets/characters.png"
 import map from "../assets/map.jpg"
@@ -8,6 +9,7 @@ import map4 from "../assets/map4.png"
 import { GridPhysics } from "./GridPhysics"
 import { Direction } from "./Direction"
 import { GridControls } from "./GridControls"
+import { Socket } from "./Socket"
 
 export default class MainScene extends Phaser.Scene {
     static readonly TILE_SIZE = 48
@@ -18,9 +20,12 @@ export default class MainScene extends Phaser.Scene {
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
     public ready = false
+    public players: Player[]
+    public socket: Socket | null = null
 
     constructor() {
         super("MainScene")
+        this.players = []
     }
 
     preload() {
@@ -41,14 +46,14 @@ export default class MainScene extends Phaser.Scene {
 
         this.cursors = this.input.keyboard!.createCursorKeys()
         this.escKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
-        this.dot = this.physics.add.sprite(400, 300, "").setCircle(10)
+        // this.dot = this.physics.add.sprite(400, 300, "").setCircle(10)
 
         const playerSprite = this.add.sprite(0, 0, "player")
         playerSprite.setDepth(2)
         playerSprite.scale = 3
         this.cameras.main.startFollow(playerSprite)
         this.cameras.main.roundPixels = true
-        this.player = new Player(playerSprite, new Phaser.Math.Vector2(6, 6), this)
+        this.player = new Player(initialPlayer, playerSprite, new Phaser.Math.Vector2(6, 6), this)
 
         this.gridPhysics = new GridPhysics(this.player)
         this.gridControls = new GridControls(this.input, this.gridPhysics)
@@ -63,26 +68,39 @@ export default class MainScene extends Phaser.Scene {
         this.ready = true
     }
 
-    private createPlayerAnimation(
-        name: string,
-        startFrame: number,
-        endFrame: number
-      ) {
+    newPlayer(player: GamePlayer) {
+        const playerSprite = this.add.sprite(0, 0, "test")
+        playerSprite.setDepth(2)
+        playerSprite.scale = 3
+        this.players.push(new Player(player, playerSprite, new Phaser.Math.Vector2(6, 6), this))
+    }
+
+    getPlayers() {
+        return this.players
+    }
+
+    connectWebSocket() {
+        this.socket = new Socket(this)
+    }
+
+    private createPlayerAnimation(name: string, startFrame: number, endFrame: number) {
         this.anims.create({
-          key: name,
-          frames: this.anims.generateFrameNumbers("player", {
-            start: startFrame,
-            end: endFrame,
-          }),
-          frameRate: 10,
-          repeat: -1,
-          yoyo: true,
-        });
-      }
+            key: name,
+            frames: this.anims.generateFrameNumbers("player", {
+                start: startFrame,
+                end: endFrame,
+            }),
+            frameRate: 10,
+            repeat: -1,
+            yoyo: true,
+        })
+    }
 
     updatePosition(newPosition: { x: number; y: number }) {}
 
     update(_time: number, delta: number) {
+        this.socket?.ws.readyState == 1 && this.socket.syncPlayers()
+
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             console.log("game")
             this.events.emit("gameMenu")

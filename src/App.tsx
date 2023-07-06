@@ -9,7 +9,6 @@ import { Login } from "./pages/Login"
 import { Game } from "./pages/Game"
 import { PlayerContextProvider } from "./contexts/playerContext"
 import { UserProvider } from "./contexts/userContext"
-import { WebsocketProvider } from "./contexts/websocketContext"
 import { GameMenuProvider } from "./contexts/gameMenuContext"
 import { GameProvider } from "./contexts/gameContext"
 import { MainMenu } from "./pages/MainMenu"
@@ -21,23 +20,21 @@ const App: React.FC = () => {
         <ThemeProvider theme={muiTheme}>
             <SnackbarProvider>
                 <BrowserRouter>
-                    <WebsocketProvider>
+                    <GameProvider>
                         <UserProvider>
                             <PlayerContextProvider>
-                                <GameProvider>
-                                    <GameMenuProvider>
-                                        <Snackbar />
-                                        <Routes>
-                                            <Route index element={<MainMenu />} />
-                                            <Route path="*" element={<MainMenu />} />
-                                            <Route path="/login" element={<Login />} />
-                                            <Route path="/game" element={<Game />} />
-                                        </Routes>
-                                    </GameMenuProvider>
-                                </GameProvider>
+                                <GameMenuProvider>
+                                    <Snackbar />
+                                    <Routes>
+                                        <Route index element={<MainMenu />} />
+                                        <Route path="*" element={<MainMenu />} />
+                                        <Route path="/login" element={<Login />} />
+                                        <Route path="/game" element={<Game />} />
+                                    </Routes>
+                                </GameMenuProvider>
                             </PlayerContextProvider>
                         </UserProvider>
-                    </WebsocketProvider>
+                    </GameProvider>
                 </BrowserRouter>
             </SnackbarProvider>
         </ThemeProvider>
