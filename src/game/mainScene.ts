@@ -68,11 +68,18 @@ export default class MainScene extends Phaser.Scene {
         this.ready = true
     }
 
-    newPlayer(player: GamePlayer) {
+    newPlayer(player: GamePlayer, user: User) {
         const playerSprite = this.add.sprite(0, 0, "test")
         playerSprite.setDepth(2)
         playerSprite.scale = 3
-        this.players.push(new Player(player, playerSprite, new Phaser.Math.Vector2(6, 6), this))
+        const newPlayer = new Player(player, playerSprite, new Phaser.Math.Vector2(6, 6), this)
+        newPlayer.id = user.id
+
+        this.players.push(newPlayer)
+    }
+
+    removePlayer(player: GamePlayer) {
+        this.players = this.players.filter((item) => item.id != player.id)
     }
 
     getPlayers() {
@@ -99,7 +106,8 @@ export default class MainScene extends Phaser.Scene {
     updatePosition(newPosition: { x: number; y: number }) {}
 
     update(_time: number, delta: number) {
-        this.socket?.ws.readyState == 1 && this.socket.syncPlayers()
+        // this.socket?.ws.readyState == 1 && this.socket.syncPlayers()
+        this.socket?.ready && this.socket.syncPlayers()
 
         if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
             console.log("game")

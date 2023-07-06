@@ -58,6 +58,7 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
             setId(user.id)
             sceneInstance.player.id = user.id
             sceneInstance.player.user = user
+            console.log("called game websocket connection")
             sceneInstance.connectWebSocket()
         }
     }, [user, sceneInstance])
