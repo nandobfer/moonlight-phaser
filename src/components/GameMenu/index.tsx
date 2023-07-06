@@ -20,7 +20,7 @@ export const GameMenu: React.FC<GameMenuProps> = ({}) => {
     const handleMainMenu = () => {
         handleClose()
         // game?.destroy(true, false)
-        navigate("/login")
+        navigate("/")
     }
 
     return (

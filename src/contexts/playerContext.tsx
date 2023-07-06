@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import React from "react"
 import { initialPlayer } from "../mocs/player"
+import { useGame } from "../hooks/useGame"
 
 interface PlayerContextContextValue {
     player: Player
@@ -15,6 +16,8 @@ const PlayerContextContext = createContext<PlayerContextContextValue>({} as Play
 export default PlayerContextContext
 
 export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ children }) => {
+    const { sceneInstance } = useGame()
+
     const [speed, setSpeed] = useState<number>(initialPlayer.speed)
     const [maxHealth, setMaxHealth] = useState(initialPlayer.maxHealth)
     const [health, setHealth] = useState(maxHealth)
@@ -32,7 +35,7 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     }
 
     useEffect(() => {
-        // console.log({ player })
+        sceneInstance?.player.syncReact(player)
     }, [player])
 
     return <PlayerContextContext.Provider value={{ player }}>{children}</PlayerContextContext.Provider>

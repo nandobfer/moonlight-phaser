@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState } from "react"
+import { createContext, useEffect, useMemo, useRef, useState } from "react"
 import React from "react"
 import MainScene from "../game/mainScene"
 
@@ -21,14 +21,13 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const [gameInstance, setGameInstance] = useState<Phaser.Game>()
     const [sceneInstance, setSceneInstance] = useState<MainScene>()
 
-    // const gameInstance = useRef<Phaser.Game>()
-    // const sceneInstance = useRef<MainScene>()
-
     useEffect(() => {
         if (gameInstance) {
-            setSceneInstance(gameInstance.scene.keys.MainScene as MainScene)
-        } else {
-            setSceneInstance(undefined)
+            const interval = setInterval(() => {
+                gameInstance?.scene.keys.MainScene && setSceneInstance(gameInstance?.scene.keys.MainScene as MainScene)
+            }, 500)
+
+            return () => clearInterval(interval)
         }
     }, [gameInstance])
 

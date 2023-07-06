@@ -15,22 +15,7 @@ export const Game: React.FC<GameProps> = ({}) => {
     const location = useLocation()
     const player = usePlayer()
     const gameMenu = useGameMenu()
-    const { gameInstance, sceneInstance, game, scene, setGameInstance, setSceneInstance } = useGame()
-
-    useEffect(() => {
-        if (gameInstance) {
-            const canvas = document.getElementById("game-container")?.firstChild as HTMLCanvasElement
-            if (canvas) {
-                canvas.tabIndex = 1 // Make the canvas focusable
-                canvas.focus()
-                // Add a click event listener to refocus the canvas
-                const refocus = () => canvas.focus()
-                canvas.addEventListener("click", refocus)
-                // Remember to remove the event listener on cleanup
-                return () => canvas.removeEventListener("click", refocus)
-            }
-        }
-    }, [gameInstance])
+    const { gameInstance, sceneInstance, game, scene, setGameInstance } = useGame()
 
     useEffect(() => {
         if (sceneInstance) {
@@ -54,12 +39,6 @@ export const Game: React.FC<GameProps> = ({}) => {
     }, [sceneInstance])
 
     useEffect(() => {
-        if (scene?.player) {
-            scene.player.syncReact(player)
-        }
-    }, [player])
-
-    useEffect(() => {
         if (scene) {
             if (gameMenu.open) {
                 scene.game.pause()
@@ -78,6 +57,7 @@ export const Game: React.FC<GameProps> = ({}) => {
                 width: window.innerWidth,
                 height: window.innerHeight,
                 parent: "game-container",
+                autoFocus: true,
                 physics: {
                     default: "arcade",
                 },
@@ -86,12 +66,11 @@ export const Game: React.FC<GameProps> = ({}) => {
             setGameInstance(new Phaser.Game(config))
         }
 
-        return () => {
-            console.log("unmounting")
-            gameInstance?.destroy(true)
-            setGameInstance(undefined)
-            setSceneInstance(undefined)
-        }
+        // return () => {
+        //     console.log("unmounting")
+        //     gameInstance?.destroy(true)
+        //     setGameInstance(undefined)
+        // }
     }, [])
 
     return (
