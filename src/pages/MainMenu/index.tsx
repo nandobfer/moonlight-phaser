@@ -85,7 +85,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                         sx={{
                             flexDirection: "column",
                             gap: "1vw",
-                            height: "40vh",
+                            height: "20vw",
                             overflowY: "auto",
                             padding: "1vw 0",
 
@@ -95,7 +95,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                             },
 
                             "::-webkit-scrollbar-thumb": {
-                                background: colors.primary,
+                                background: colors.primaryTransparent,
                             },
                         }}
                     >
