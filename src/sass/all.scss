@@ -64,6 +64,7 @@ div {
 img {
     object-fit: contain;
     user-select: none;
+    pointer-events: none;
 }
 
 ::placeholder {
