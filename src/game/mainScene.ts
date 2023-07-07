@@ -20,12 +20,11 @@ export default class MainScene extends Phaser.Scene {
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
     public ready = false
-    public players: Player[]
+    public players: Player[] = []
     public socket: Socket | null = null
 
     constructor() {
         super("MainScene")
-        this.players = []
     }
 
     preload() {
@@ -78,12 +77,12 @@ export default class MainScene extends Phaser.Scene {
         this.players.push(newPlayer)
     }
 
-    removePlayer(player: GamePlayer) {
-        this.players = this.players.filter((item) => item.id != player.id)
-    }
-
     getPlayers() {
         return this.players
+    }
+
+    getPlayer(id: number) {
+        return this.players.filter((player) => player.id == id)[0]
     }
 
     connectWebSocket() {

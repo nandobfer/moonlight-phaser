@@ -22,7 +22,10 @@ export class Socket {
 
         this.io.on("player:disconnect", (client: Client) => {
             console.log("disconnected: ", client.user.name)
-            this.game.removePlayer(client.player)
+
+            const player = this.game.getPlayer(client.player.id)
+            this.game.players = this.game.players.filter((item) => item.id != client.player.id)
+            player.destroy()
         })
 
         this.io.on("players", (clients: Client[]) => {
@@ -37,9 +40,8 @@ export class Socket {
         })
 
         this.io.on("player:sync", (clients: Client[]) => {
-            const currentPlayers = this.game.getPlayers()
             clients.map((client) => {
-                const player = currentPlayers.filter((player) => player.id == client.player.id)[0]
+                const player = this.game.getPlayer(client.player.id)
                 player?.syncPlayer(client.player)
             })
         })

@@ -39,11 +39,6 @@ export class Player {
         this.sprite.anims.play(direction)
     }
 
-    syncReact(player: ReactPlayer): void {
-        this.stats = player.stats
-        this.sprite.setPosition(player.position.x, player.position.y)
-    }
-
     getPosition(): Phaser.Math.Vector2 {
         return this.sprite.getBottomCenter()
     }
@@ -51,6 +46,11 @@ export class Player {
     setPosition(position: Phaser.Math.Vector2): void {
         this.sprite.setPosition(position.x, position.y)
         this.scene.events.emit("setPosition", { x: position.x, y: position.y })
+    }
+
+    syncReact(player: ReactPlayer): void {
+        this.stats = player.stats
+        this.sprite.setPosition(player.position.x, player.position.y)
     }
 
     getPlayer() {
@@ -70,5 +70,9 @@ export class Player {
         this.stats = player.stats
         this.position = player.position
         this.sprite.setPosition(player.position.x, player.position.y)
+    }
+
+    destroy() {
+        this.sprite.destroy()
     }
 }
