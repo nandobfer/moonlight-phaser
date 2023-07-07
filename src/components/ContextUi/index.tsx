@@ -21,9 +21,24 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
             }}
         >
             {[
-                { id: 1, value: player.stats.health, set: player.setHealth, name: "health" },
-                { id: 2, value: player.stats.maxHealth, set: player.setMaxHealth, name: "max health" },
-                { id: 3, value: player.stats.speed, set: player.setSpeed, name: "speed" },
+                {
+                    id: 1,
+                    value: player.stats.health,
+                    set: (value: number) => player.setStats({ ...player.stats, health: value }),
+                    name: "health",
+                },
+                {
+                    id: 2,
+                    value: player.stats.maxHealth,
+                    set: (value: number) => player.setStats({ ...player.stats, maxHealth: value }),
+                    name: "max health",
+                },
+                {
+                    id: 3,
+                    value: player.stats.speed,
+                    set: (value: number) => player.setStats({ ...player.stats, speed: value }),
+                    name: "speed",
+                },
             ].map((stat) => {
                 const initialValues = { stat: stat.value }
                 const handleSubmit = (values: { stat: number }) => {

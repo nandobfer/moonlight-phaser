@@ -12,9 +12,6 @@ declare interface GamePlayer extends Character {
 
 declare interface ReactPlayer extends GamePlayer {
     setId: (id: number) => void
-    setLevel: (id: number) => void
-    setSpeed: (speed: number) => void
-    setHealth: (health: number) => void
-    setMaxHealth: (maxHealth: number) => void
+    setStats: (stats: Stats) => void
     setPosition: (position: { x: number; y: number }) => void
 }

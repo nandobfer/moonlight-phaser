@@ -23,26 +23,15 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     const { user } = useUser()
 
     const [id, setId] = useState(initialPlayer.id)
-    const [level, setLevel] = useState(initialPlayer.stats.level)
-    const [speed, setSpeed] = useState<number>(initialPlayer.stats.speed)
-    const [maxHealth, setMaxHealth] = useState(initialPlayer.stats.maxHealth)
-    const [health, setHealth] = useState(maxHealth)
+    const [stats, setStats] = useState(initialPlayer.stats)
     const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
 
     const player: ReactPlayer = {
         id,
-        stats: {
-            health,
-            level,
-            maxHealth,
-            speed,
-        },
+        stats,
         position,
         setId,
-        setLevel,
-        setSpeed,
-        setHealth,
-        setMaxHealth,
+        setStats,
         setPosition,
     }
 
