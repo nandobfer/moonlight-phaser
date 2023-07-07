@@ -69,7 +69,7 @@ export class GridPhysics {
 
     private getPixelsToWalkThisUpdate(delta: number): number {
         const deltaInSeconds = delta / 1000
-        return this.speedPixelsPerSecond * deltaInSeconds * this.player.speed
+        return this.speedPixelsPerSecond * deltaInSeconds * this.player.stats.speed
     }
 
     private stopMoving(): void {

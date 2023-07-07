@@ -11,6 +11,7 @@ import { UserProvider } from "./contexts/userContext"
 import { GameMenuProvider } from "./contexts/gameMenuContext"
 import { GameProvider } from "./contexts/gameContext"
 import { MainMenu } from "./pages/MainMenu"
+import { CharactersProvider } from "./contexts/charactersContext"
 
 const App: React.FC = () => {
     const muiTheme = useMuiTheme()
@@ -19,20 +20,22 @@ const App: React.FC = () => {
         <ThemeProvider theme={muiTheme}>
             <SnackbarProvider>
                 <BrowserRouter>
-                    <GameProvider>
-                        <UserProvider>
-                            <PlayerContextProvider>
-                                <GameMenuProvider>
-                                    <Snackbar />
-                                    <Routes>
-                                        <Route index element={<MainMenu />} />
-                                        <Route path="*" element={<MainMenu />} />
-                                        <Route path="/game" element={<Game />} />
-                                    </Routes>
-                                </GameMenuProvider>
-                            </PlayerContextProvider>
-                        </UserProvider>
-                    </GameProvider>
+                    <CharactersProvider>
+                        <GameProvider>
+                            <UserProvider>
+                                <PlayerContextProvider>
+                                    <GameMenuProvider>
+                                        <Snackbar />
+                                        <Routes>
+                                            <Route index element={<MainMenu />} />
+                                            <Route path="*" element={<MainMenu />} />
+                                            <Route path="/game" element={<Game />} />
+                                        </Routes>
+                                    </GameMenuProvider>
+                                </PlayerContextProvider>
+                            </UserProvider>
+                        </GameProvider>
+                    </CharactersProvider>
                 </BrowserRouter>
             </SnackbarProvider>
         </ThemeProvider>

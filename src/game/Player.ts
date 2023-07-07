@@ -3,9 +3,7 @@ import MainScene from "./mainScene"
 
 export class Player {
     public id: number
-    public speed: number
-    public maxHealth: number
-    public health: number
+    public stats: Stats
     public position: object
     public user: User | null = null
 
@@ -19,9 +17,9 @@ export class Player {
         const offsetY = MainScene.TILE_SIZE
 
         this.id = player.id
-        this.speed = player.speed
-        this.maxHealth = player.maxHealth
-        this.health = player.health
+
+        this.stats = player.stats
+
         this.position = player.position
 
         this.sprite.setOrigin(0.5, 1)
@@ -42,9 +40,7 @@ export class Player {
     }
 
     syncReact(player: ReactPlayer): void {
-        this.health = player.health
-        this.maxHealth = player.maxHealth
-        this.speed = player.speed
+        this.stats = player.stats
         this.sprite.setPosition(player.position.x, player.position.y)
     }
 
@@ -60,9 +56,7 @@ export class Player {
     getPlayer() {
         const player: GamePlayer = {
             id: this.id,
-            health: this.health,
-            maxHealth: this.maxHealth,
-            speed: this.speed,
+            stats: this.stats,
             position: {
                 x: this.getPosition().x,
                 y: this.getPosition().y,
@@ -73,9 +67,7 @@ export class Player {
     }
 
     syncPlayer(player: GamePlayer) {
-        this.speed = player.speed
-        this.maxHealth = player.maxHealth
-        this.health = player.health
+        this.stats = player.stats
         this.position = player.position
         this.sprite.setPosition(player.position.x, player.position.y)
     }

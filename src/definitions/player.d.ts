@@ -1,9 +1,9 @@
-declare interface GamePlayer {
+declare interface Character {
     id: number
-    speed: number
-    health: number
-    maxHealth: number
+    stats: Stats
+}
 
+declare interface GamePlayer extends Character {
     position: {
         x: number
         y: number
@@ -12,6 +12,7 @@ declare interface GamePlayer {
 
 declare interface ReactPlayer extends GamePlayer {
     setId: (id: number) => void
+    setLevel: (id: number) => void
     setSpeed: (speed: number) => void
     setHealth: (health: number) => void
     setMaxHealth: (maxHealth: number) => void
