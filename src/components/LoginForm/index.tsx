@@ -6,14 +6,16 @@ import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../../hooks/useUser"
 
-interface LoginProps {}
+interface LoginProps {
+    handleCancelLogin: () => void
+}
 
-interface LoginForm {
+interface LoginFormValues {
     user: string
     password: string
 }
 
-export const Login: React.FC<LoginProps> = ({}) => {
+export const LoginForm: React.FC<LoginProps> = ({ handleCancelLogin }) => {
     const api = useApi()
     const navigate = useNavigate()
     // const websocket = useWebsocket()
@@ -28,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
         password: "",
     }
 
-    const handleSubmit = (values: LoginForm) => {
+    const handleSubmit = (values: LoginFormValues) => {
         if (loading) return
 
         setLoading(true)
@@ -52,7 +54,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
     }
 
     return (
-        <Paper sx={{ flexDirection: "column", width: "100%", borderRadius: 0, padding: "2vw", gap: "2vw" }}>
+        <Box sx={{ flexDirection: "column", gap: "1vw" }}>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form style={{ display: "contents" }}>
@@ -73,12 +75,17 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             required
                             autoComplete="off"
                         />
-                        <Button type="submit" variant="contained">
-                            {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "login"}
-                        </Button>
+                        <Box sx={{ gap: "1vw", width: "100%" }}>
+                            <Button variant="outlined" onClick={handleCancelLogin} fullWidth>
+                                cancel
+                            </Button>
+                            <Button type="submit" variant="contained" fullWidth>
+                                {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "login"}
+                            </Button>
+                        </Box>
                     </Form>
                 )}
             </Formik>
-        </Paper>
+        </Box>
     )
 }

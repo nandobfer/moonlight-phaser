@@ -5,7 +5,6 @@ import { useMuiTheme } from "./hooks/useMuiTheme"
 import { Snackbar, SnackbarProvider } from "burgos-snackbar"
 import { BrowserRouter } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
-import { Login } from "./pages/Login"
 import { Game } from "./pages/Game"
 import { PlayerContextProvider } from "./contexts/playerContext"
 import { UserProvider } from "./contexts/userContext"
@@ -28,7 +27,6 @@ const App: React.FC = () => {
                                     <Routes>
                                         <Route index element={<MainMenu />} />
                                         <Route path="*" element={<MainMenu />} />
-                                        <Route path="/login" element={<Login />} />
                                         <Route path="/game" element={<Game />} />
                                     </Routes>
                                 </GameMenuProvider>
