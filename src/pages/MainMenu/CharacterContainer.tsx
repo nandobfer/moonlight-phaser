@@ -26,7 +26,7 @@ export const CharacterContainer: React.FC<CharacterContainerProps> = ({ characte
             onConfirm: () => {
                 setCharacters(characters.filter((char) => char.id != character.id))
                 if (player.id == character.id) {
-                    player.setPlayer(undefined)
+                    player.setPlayer(characters[0].id == character.id ? undefined : characters[0])
                 }
             },
         })
