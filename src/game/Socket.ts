@@ -9,7 +9,7 @@ export class Socket {
     public ready: boolean = false
 
     constructor(game: MainScene) {
-        this.io = io("ws://localhost:4103")
+        this.io = io("wss://app.agenciaboz.com.br:4103")
         this.game = game
         this.player = this.game.player!
 
