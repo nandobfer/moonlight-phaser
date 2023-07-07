@@ -83,8 +83,8 @@ export const Game: React.FC<GameProps> = ({}) => {
                     border: "1px solid red",
                 }}
             >
-                <Status />
-                <ContextUi />
+                <Status player={player as Character} />
+                <ContextUi player={player as Character} />
                 <GameMenu />
             </Box>
             <Box

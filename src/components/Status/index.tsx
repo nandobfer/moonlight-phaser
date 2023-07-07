@@ -2,10 +2,12 @@ import { Box, LinearProgress, SxProps } from "@mui/material"
 import React from "react"
 import { usePlayer } from "../../hooks/usePlayer"
 
-interface StatusProps {}
+interface StatusProps {
+    player: Character
+}
 
-export const Status: React.FC<StatusProps> = ({}) => {
-    const player = usePlayer()
+export const Status: React.FC<StatusProps> = ({ player }) => {
+    const {} = usePlayer()
 
     const normalise = (value: number) => ((value - 0) * 100) / (player.stats.maxHealth - 0)
 

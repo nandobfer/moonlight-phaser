@@ -5,7 +5,8 @@ import { useGame } from "../hooks/useGame"
 import { useUser } from "../hooks/useUser"
 
 interface PlayerContextContextValue {
-    player: ReactPlayer
+    player: Character | undefined
+    setPlayer: (player: Character | undefined) => void
 }
 
 interface PlayerContextProviderProps {
@@ -22,21 +23,10 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     const { sceneInstance } = useGame()
     const { user } = useUser()
 
-    const [id, setId] = useState(initialPlayer.id)
-    const [stats, setStats] = useState(initialPlayer.stats)
-    const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
-
-    const player: ReactPlayer = {
-        id,
-        stats,
-        position,
-        setId,
-        setStats,
-        setPosition,
-    }
+    const [player, setPlayer] = useState<Character>()
 
     useEffect(() => {
-        sceneInstance?.player.syncReact(player)
+        if (sceneInstance) sceneInstance?.player.syncReact(player!)
 
         // console.log({ sceneInstance, user })
         // if (user && sceneInstance && websocket.ready && player) {
@@ -49,13 +39,11 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
 
     useEffect(() => {
         if (user && sceneInstance) {
-            setId(user.id)
-            sceneInstance.player.id = user.id
             sceneInstance.player.user = user
             console.log("called game websocket connection")
             sceneInstance.connectWebSocket()
         }
     }, [user, sceneInstance])
 
-    return <PlayerContextContext.Provider value={{ player }}>{children}</PlayerContextContext.Provider>
+    return <PlayerContextContext.Provider value={{ player, setPlayer }}>{children}</PlayerContextContext.Provider>
 }

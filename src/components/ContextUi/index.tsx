@@ -3,10 +3,12 @@ import React from "react"
 import { usePlayer } from "../../hooks/usePlayer"
 import { Formik, Form } from "formik"
 
-interface ContextUiProps {}
+interface ContextUiProps {
+    player: Character
+}
 
-export const ContextUi: React.FC<ContextUiProps> = ({}) => {
-    const player = usePlayer()
+export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
+    const { setHealth, setLevel, setMaxHealth, setSpeed, setPosition } = usePlayer()
 
     return (
         <Box
@@ -24,19 +26,19 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
                 {
                     id: 1,
                     value: player.stats.health,
-                    set: (value: number) => player.setStats({ ...player.stats, health: value }),
+                    set: setHealth,
                     name: "health",
                 },
                 {
                     id: 2,
                     value: player.stats.maxHealth,
-                    set: (value: number) => player.setStats({ ...player.stats, maxHealth: value }),
+                    set: setMaxHealth,
                     name: "max health",
                 },
                 {
                     id: 3,
                     value: player.stats.speed,
-                    set: (value: number) => player.setStats({ ...player.stats, speed: value }),
+                    set: setSpeed,
                     name: "speed",
                 },
             ].map((stat) => {
@@ -64,7 +66,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({}) => {
                 )
             })}
 
-            <Formik initialValues={player.position} onSubmit={(values) => player.setPosition(values)} enableReinitialize>
+            <Formik initialValues={player.position} onSubmit={(values) => setPosition(values)} enableReinitialize>
                 {({ values, handleChange }) => (
                     <Form style={{ display: "flex", flexDirection: "row", gap: "1vw" }}>
                         <TextField label={"x"} name="x" value={values.x} onChange={handleChange} variant="standard" />

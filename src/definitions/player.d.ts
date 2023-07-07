@@ -1,14 +1,13 @@
 declare interface Character {
     id: number
     stats: Stats
-}
-
-declare interface GamePlayer extends Character {
     position: {
         x: number
         y: number
     }
 }
+
+declare interface GamePlayer extends Character {}
 
 declare interface ReactPlayer extends GamePlayer {
     setId: (id: number) => void

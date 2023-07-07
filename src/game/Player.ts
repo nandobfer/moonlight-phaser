@@ -48,7 +48,7 @@ export class Player {
         this.scene.events.emit("setPosition", { x: position.x, y: position.y })
     }
 
-    syncReact(player: ReactPlayer): void {
+    syncReact(player: Character): void {
         this.stats = player.stats
         this.sprite.setPosition(player.position.x, player.position.y)
     }
