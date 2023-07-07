@@ -8,11 +8,11 @@ export const usePlayer = () => {
     const setPlayer = playerContext.setPlayer
 
     const setHealth = (value: number) => {
-        setPlayer({ ...player!, stats: { ...player!.stats, health: value } })
+        setPlayer({ ...player!, stats: { ...player!.stats, life: value } })
     }
 
     const setMaxHealth = (value: number) => {
-        setPlayer({ ...player!, stats: { ...player!.stats, maxHealth: value } })
+        setPlayer({ ...player!, stats: { ...player!.stats, maxLife: value } })
     }
 
     const setSpeed = (value: number) => {

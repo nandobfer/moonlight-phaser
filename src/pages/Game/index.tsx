@@ -7,13 +7,14 @@ import { ContextUi } from "../../components/ContextUi"
 import { useGameMenu } from "../../hooks/useGameMenu"
 import { GameMenu } from "../../components/GameMenu"
 import { useGame } from "../../hooks/useGame"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 interface GameProps {}
 
 export const Game: React.FC<GameProps> = ({}) => {
     const location = useLocation()
     const gameMenu = useGameMenu()
+    const navigate = useNavigate()
 
     const { gameInstance, sceneInstance, game, scene, setGameInstance } = useGame()
     const player = usePlayer()
@@ -52,8 +53,9 @@ export const Game: React.FC<GameProps> = ({}) => {
     }, [gameMenu.open])
 
     useEffect(() => {
-        console.log("mounted")
-        if (!gameInstance) {
+        if (!player.id) navigate("/")
+
+        if (!gameInstance && player.id) {
             console.log("creating game")
             const config: Phaser.Types.Core.GameConfig = {
                 type: Phaser.AUTO,
@@ -76,7 +78,7 @@ export const Game: React.FC<GameProps> = ({}) => {
         // }
     }, [])
 
-    return (
+    return player.id ? (
         <Box sx={{ position: "relative" }}>
             <Box
                 sx={{
@@ -98,5 +100,7 @@ export const Game: React.FC<GameProps> = ({}) => {
                 }}
             />
         </Box>
+    ) : (
+        <></>
     )
 }

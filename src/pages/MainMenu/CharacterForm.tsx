@@ -50,9 +50,46 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
 
             stats: {
                 level: 1,
-                health: 100,
-                maxHealth: 100,
                 speed: 5,
+
+                maxLife: 100,
+                maxRage: 100,
+                maxStamina: 100,
+                maxMana: 100,
+
+                life: 100,
+                rage: 100,
+                stamina: 100,
+                mana: 100,
+
+                regeneration: {
+                    life: 1,
+                    rage: 0,
+                    stamina: 10,
+                    mana: 2,
+                },
+
+                armor: 0,
+                resistance: {
+                    magical: 0,
+                    physical: 0,
+                },
+
+                block: {
+                    chance: 0,
+                    value: 0,
+                },
+
+                attack: {
+                    speed: 1,
+                    range: 1,
+                    power: 1,
+                    magic: 1,
+                    critical: {
+                        chance: 10,
+                        multiplier: 2,
+                    },
+                },
             },
 
             position: {

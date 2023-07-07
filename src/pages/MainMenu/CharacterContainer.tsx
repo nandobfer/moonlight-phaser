@@ -39,7 +39,7 @@ export const CharacterContainer: React.FC<CharacterContainerProps> = ({ characte
 
                 <Box sx={{ flexDirection: "column", justifyContent: "space-evenly", flexShrink: 0 }}>
                     <p>level: {character.stats.level}</p>
-                    <p>health: {character.stats.health}</p>
+                    <p>health: {character.stats.life}</p>
                     <p>speed: {character.stats.speed}</p>
                 </Box>
 

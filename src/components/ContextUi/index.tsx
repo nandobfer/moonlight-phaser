@@ -25,13 +25,13 @@ export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
             {[
                 {
                     id: 1,
-                    value: player.stats.health,
+                    value: player.stats.life,
                     set: setHealth,
                     name: "health",
                 },
                 {
                     id: 2,
-                    value: player.stats.maxHealth,
+                    value: player.stats.maxLife,
                     set: setMaxHealth,
                     name: "max health",
                 },
