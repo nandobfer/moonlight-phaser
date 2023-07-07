@@ -36,10 +36,10 @@ export default class MainScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 32,
         })
-        // this.load.spritesheet("player:2", player2, {
-        //     frameWidth: 16,
-        //     frameHeight: 32,
-        // })
+        this.load.spritesheet("player:2", player2, {
+            frameWidth: 16,
+            frameHeight: 32,
+        })
 
         this.load.image("map", map)
         this.load.image("map2", map2)
@@ -57,11 +57,6 @@ export default class MainScene extends Phaser.Scene {
         // this.dot = this.physics.add.sprite(400, 300, "").setCircle(10)
 
         // this.cameras.main.postFX.addPixelate(8)
-
-        this.createPlayerAnimation(Direction.UP, 9, 12)
-        this.createPlayerAnimation(Direction.RIGHT, 5, 8)
-        this.createPlayerAnimation(Direction.DOWN, 1, 4)
-        this.createPlayerAnimation(Direction.LEFT, 5, 8)
 
         this.ready = true
 
@@ -82,6 +77,11 @@ export default class MainScene extends Phaser.Scene {
 
         this.gridPhysics = new GridPhysics(this.player)
         this.gridControls = new GridControls(this.input, this.gridPhysics)
+
+        this.createPlayerAnimation(Direction.UP, 8, 11)
+        this.createPlayerAnimation(Direction.RIGHT, 4, 7)
+        this.createPlayerAnimation(Direction.DOWN, 0, 3)
+        this.createPlayerAnimation(Direction.LEFT, 4, 7)
     }
 
     newPlayer(player: GamePlayer, user: User) {

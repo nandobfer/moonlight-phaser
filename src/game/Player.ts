@@ -32,12 +32,12 @@ export class Player {
             player.position.x * MainScene.TILE_SIZE + offsetX,
             player.position.y * MainScene.TILE_SIZE + offsetY
         )
-        this.sprite.setFrame(1)
+        this.sprite.setFrame(0)
     }
 
     stopAnimation() {
         if (this.sprite.anims.currentAnim) {
-            const standingFrame = this.sprite.anims.currentAnim.frames[1].frame.name
+            const standingFrame = this.sprite.anims.currentAnim.frames[0].frame.name
             this.sprite.anims.stop()
             this.sprite.setFrame(standingFrame)
         }

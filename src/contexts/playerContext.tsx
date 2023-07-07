@@ -27,7 +27,6 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     useEffect(() => {
         if (sceneInstance) sceneInstance?.player?.syncReact(player!)
 
-        console.log({ player })
     }, [player])
 
     useEffect(() => {
