@@ -14,17 +14,14 @@ export class Socket {
         this.player = this.game.player!
 
         this.io.on("connect", () => {
-            this.io.emit("player:new", {
-                player: this.player.getPlayer(),
-                user: this.player.user,
-            })
+            this.io.emit("player:new", this.getClient())
         })
 
         this.io.on("player:disconnect", (client: Client) => {
             console.log("disconnected: ", client.user.name)
 
-            const player = this.game.getPlayer(client.player.id)
-            this.game.players = this.game.players.filter((item) => item.id != client.player.id)
+            const player = this.game.getPlayer(client.user.id)
+            this.game.players = this.game.players.filter((item) => item.user!.id != client.user.id)
             player.destroy()
         })
 
@@ -41,17 +38,21 @@ export class Socket {
 
         this.io.on("player:sync", (clients: Client[]) => {
             clients.map((client) => {
-                const player = this.game.getPlayer(client.player.id)
+                const player = this.game.getPlayer(client.user.id)
                 player?.syncPlayer(client.player)
             })
         })
     }
 
     syncPlayers() {
-        this.io.emit("player:sync", { player: this.player.getPlayer() })
+        this.io.emit("player:sync", this.getClient())
     }
 
     disconnect() {
         this.io.disconnect()
+    }
+
+    getClient() {
+        return { player: this.player.getPlayer(), user: this.player.user! }
     }
 }

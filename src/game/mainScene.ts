@@ -85,11 +85,11 @@ export default class MainScene extends Phaser.Scene {
     }
 
     newPlayer(player: GamePlayer, user: User) {
-        const playerSprite = this.add.sprite(0, 0, "test")
+        const playerSprite = this.add.sprite(0, 0, `player:${player.sprite}`)
         playerSprite.setDepth(2)
         playerSprite.scale = 3
         const newPlayer = new Player(player, playerSprite, new Phaser.Math.Vector2(6, 6), this)
-        newPlayer.id = user.id
+        newPlayer.user = user
 
         this.players.push(newPlayer)
     }
@@ -99,7 +99,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     getPlayer(id: number) {
-        return this.players.filter((player) => player.id == id)[0]
+        return this.players.filter((player) => (player.user?.id || player.id) == id)[0]
     }
 
     connectWebSocket() {
