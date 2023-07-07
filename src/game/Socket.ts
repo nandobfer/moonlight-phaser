@@ -43,36 +43,13 @@ export class Socket {
                 player?.syncPlayer(client.player)
             })
         })
-
-        // this.ws.addEventListener("message", (message) => {
-        //     const data = JSON.parse(message.data)
-
-        //     if (data.syncPlayers) {
-        //         const clients: Client[] = data.syncPlayers.clients
-
-        //         const currentPlayers = this.game.getPlayers()
-        //         const currentPlayersIds = currentPlayers.map((player) => player.id)
-
-        //         clients.map((client) => {
-        //             if (!currentPlayersIds.includes(client.user.id)) {
-        //                 this.game.newPlayer(client.player)
-        //             } else {
-        //                 const player = currentPlayers.filter((player) => player.id == client.user.id)[0]
-        //                 player.syncPlayer(client.player)
-        //             }
-        //         })
-        //     }
-        // })
     }
 
     syncPlayers() {
-        // this.ws.send(
-        //     JSON.stringify({
-        //         syncPlayers: {
-        //             player: this.player.getPlayer(),
-        //         },
-        //     })
-        // )
         this.io.emit("player:sync", { player: this.player.getPlayer() })
+    }
+
+    disconnect() {
+        this.io.disconnect()
     }
 }
