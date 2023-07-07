@@ -1,19 +1,25 @@
 import { AlertColor, Box, LinearProgress, SxProps } from "@mui/material"
 import React from "react"
+import colors from "../../colors"
+import { useMuiTheme } from "../../hooks/useMuiTheme"
 
 interface ProgressBarProps {
     min: number
     max: number
     color: AlertColor
+    height: number
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({ min, max, color }) => {
+export const ProgressBar: React.FC<ProgressBarProps> = ({ min, max, color, height }) => {
     const normalise = (value: number) => ((value - 0) * 100) / (max - 0)
+    const theme = useMuiTheme()
 
     const progress_style: SxProps = {
-        height: "2vw",
+        height: `${height}vw`,
         borderRadius: "5vw",
+        boxShadow: `0px 0px 15px ${theme.palette[color].main}`,
     }
+
     return (
         <Box sx={{ width: "100%", height: "min-contents", flexDirection: "column", position: "relative" }}>
             <Box

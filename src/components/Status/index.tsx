@@ -11,8 +11,9 @@ export const Status: React.FC<StatusProps> = ({ player }) => {
     const {} = usePlayer()
 
     return (
-        <Box color={"white"} sx={{ width: "30vw", padding: "2vw", flexDirection: "column" }}>
-            <ProgressBar min={player.stats.health} max={player.stats.maxHealth} color="error" />
+        <Box color={"white"} sx={{ width: "30vw", padding: "2vw", flexDirection: "column", gap: "1vw" }}>
+            <ProgressBar min={player.stats.health} max={player.stats.maxHealth} color="error" height={2} />
+            <ProgressBar min={player.stats.health} max={player.stats.maxHealth} color="info" height={1} />
         </Box>
     )
 }
