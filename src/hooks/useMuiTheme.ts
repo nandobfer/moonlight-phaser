@@ -20,6 +20,18 @@ export const useMuiTheme = () => {
                 primary: colors.text.primary,
             },
         },
+        components: {
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    input: {
+                        "&:-webkit-autofill": {
+                            "-webkit-box-shadow": "0 0 0 100px #121212 inset",
+                            "-webkit-text-fill-color": colors.text.primary,
+                        },
+                    },
+                },
+            },
+        },
     })
 
     return THEME
