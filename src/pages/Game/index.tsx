@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { usePlayer } from "../../hooks/usePlayer"
 import MainScene from "../../game/mainScene"
 import { Box } from "@mui/material"
@@ -13,20 +13,23 @@ interface GameProps {}
 
 export const Game: React.FC<GameProps> = ({}) => {
     const location = useLocation()
-    const player = usePlayer()
     const gameMenu = useGameMenu()
+
     const { gameInstance, sceneInstance, game, scene, setGameInstance } = useGame()
+    const player = usePlayer()
 
     useEffect(() => {
         if (sceneInstance) {
             sceneInstance.events.on("setPosition", (newPosition: { x: number; y: number }) => {
                 player.setPosition(newPosition)
             })
-        }
 
-        if (sceneInstance) {
             sceneInstance.events.on("gameMenu", () => {
                 gameMenu.setOpen(true)
+            })
+
+            sceneInstance.events.on("ready", () => {
+                sceneInstance.instanciateCharacter(player as Character)
             })
         }
 

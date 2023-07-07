@@ -11,7 +11,7 @@ export class Socket {
     constructor(game: MainScene) {
         this.io = io("ws://localhost:4103")
         this.game = game
-        this.player = this.game.player
+        this.player = this.game.player!
 
         this.io.on("connect", () => {
             this.io.emit("player:new", {

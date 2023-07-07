@@ -27,5 +27,5 @@ export const usePlayer = () => {
         setPlayer({ ...player!, position: value })
     }
 
-    return { ...playerContext.player, setHealth, setMaxHealth, setSpeed, setLevel, setPosition }
+    return { ...playerContext.player, setHealth, setMaxHealth, setSpeed, setLevel, setPosition, setPlayer }
 }

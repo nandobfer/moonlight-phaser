@@ -12,6 +12,7 @@ import { GameMenuProvider } from "./contexts/gameMenuContext"
 import { GameProvider } from "./contexts/gameContext"
 import { MainMenu } from "./pages/MainMenu"
 import { CharactersProvider } from "./contexts/charactersContext"
+import { ConfirmDialog, ConfirmDialogProvider } from "burgos-confirm"
 
 const App: React.FC = () => {
     const muiTheme = useMuiTheme()
@@ -19,24 +20,27 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={muiTheme}>
             <SnackbarProvider>
-                <BrowserRouter>
-                    <CharactersProvider>
-                        <GameProvider>
-                            <UserProvider>
-                                <PlayerContextProvider>
-                                    <GameMenuProvider>
-                                        <Snackbar />
-                                        <Routes>
-                                            <Route index element={<MainMenu />} />
-                                            <Route path="*" element={<MainMenu />} />
-                                            <Route path="/game" element={<Game />} />
-                                        </Routes>
-                                    </GameMenuProvider>
-                                </PlayerContextProvider>
-                            </UserProvider>
-                        </GameProvider>
-                    </CharactersProvider>
-                </BrowserRouter>
+                <ConfirmDialogProvider>
+                    <BrowserRouter>
+                        <CharactersProvider>
+                            <GameProvider>
+                                <UserProvider>
+                                    <PlayerContextProvider>
+                                        <GameMenuProvider>
+                                            <Snackbar />
+                                            <ConfirmDialog />
+                                            <Routes>
+                                                <Route index element={<MainMenu />} />
+                                                <Route path="*" element={<MainMenu />} />
+                                                <Route path="/game" element={<Game />} />
+                                            </Routes>
+                                        </GameMenuProvider>
+                                    </PlayerContextProvider>
+                                </UserProvider>
+                            </GameProvider>
+                        </CharactersProvider>
+                    </BrowserRouter>
+                </ConfirmDialogProvider>
             </SnackbarProvider>
         </ThemeProvider>
     )

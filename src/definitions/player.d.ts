@@ -1,6 +1,11 @@
 declare interface Character {
     id: number
+    name: string
+    sprite: number
     stats: Stats
+
+    attributes: Attributes
+
     position: {
         x: number
         y: number

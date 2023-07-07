@@ -3,7 +3,10 @@ import MainScene from "./mainScene"
 
 export class Player {
     public id: number
+    public spriteId: number
+    public name: string
     public stats: Stats
+    public attributes: Attributes
     public position: object
     public user: User | null = null
 
@@ -17,14 +20,19 @@ export class Player {
         const offsetY = MainScene.TILE_SIZE
 
         this.id = player.id
-
+        this.name = player.name
+        this.spriteId = player.sprite
+        this.attributes = player.attributes
         this.stats = player.stats
 
         this.position = player.position
 
         this.sprite.setOrigin(0.5, 1)
-        this.sprite.setPosition(tilePos.x * MainScene.TILE_SIZE + offsetX, tilePos.y * MainScene.TILE_SIZE + offsetY)
-        this.sprite.setFrame(58)
+        this.sprite.setPosition(
+            player.position.x * MainScene.TILE_SIZE + offsetX,
+            player.position.y * MainScene.TILE_SIZE + offsetY
+        )
+        this.sprite.setFrame(1)
     }
 
     stopAnimation() {
@@ -50,12 +58,16 @@ export class Player {
 
     syncReact(player: Character): void {
         this.stats = player.stats
+        this.attributes = player.attributes
         this.sprite.setPosition(player.position.x, player.position.y)
     }
 
     getPlayer() {
         const player: GamePlayer = {
             id: this.id,
+            sprite: this.spriteId,
+            name: this.name,
+            attributes: this.attributes,
             stats: this.stats,
             position: {
                 x: this.getPosition().x,
@@ -68,6 +80,7 @@ export class Player {
 
     syncPlayer(player: GamePlayer) {
         this.stats = player.stats
+        this.attributes = player.attributes
         this.position = player.position
         this.sprite.setPosition(player.position.x, player.position.y)
     }
