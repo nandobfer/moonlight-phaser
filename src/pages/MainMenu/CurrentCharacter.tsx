@@ -15,11 +15,7 @@ export const CurrentCharacter: React.FC<CurrentCharacterProps> = ({ character })
     return (
         <Container label={character.name} sx={{ width: "100%" }}>
             <Box sx={{ gap: "2vw", width: "100%" }}>
-                <img
-                    src={sprites[character.sprite as 1 | 2].pic}
-                    alt="picture"
-                    style={{ objectFit: "contain", width: "10vw", flexShrink: 0 }}
-                />
+                <img src={sprites[character.sprite as 1 | 2].pic} alt="picture" style={{ width: "10vw", flexShrink: 0 }} />
 
                 <Box sx={{ flexDirection: "column", gap: "2vw", flexShrink: 0, justifyContent: "center" }}>
                     <p>id: {character.id}</p>

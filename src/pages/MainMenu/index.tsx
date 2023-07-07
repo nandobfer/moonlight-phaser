@@ -53,7 +53,6 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                     src={Moonlight}
                     alt=""
                     style={{
-                        objectFit: "contain",
                         width: "20vw",
                         aspectRatio: "1/1",
                     }}

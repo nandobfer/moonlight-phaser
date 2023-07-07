@@ -35,11 +35,7 @@ export const CharacterContainer: React.FC<CharacterContainerProps> = ({ characte
     return (
         <Container label={character.name} sx={{ width: "100%", cursor: "pointer" }} onClick={onClick}>
             <Box sx={{ width: "100%", gap: "2vw", alignItems: "center" }}>
-                <img
-                    src={sprites[character.sprite as 1 | 2].pic}
-                    alt="picture"
-                    style={{ objectFit: "contain", width: "2vw", flexShrink: 0 }}
-                />
+                <img src={sprites[character.sprite as 1 | 2].pic} alt="picture" style={{ width: "2vw", flexShrink: 0 }} />
 
                 <Box sx={{ flexDirection: "column", justifyContent: "space-evenly", flexShrink: 0 }}>
                     <p>level: {character.stats.level}</p>

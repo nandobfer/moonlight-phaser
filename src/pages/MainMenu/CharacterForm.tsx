@@ -86,7 +86,7 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
                     <ArrowBackIosNewIcon sx={arrow_style} />
                 </IconButton>
 
-                <img src={sprites[currentSprite].pic} alt="picture" style={{ objectFit: "contain", width: "10vw" }} />
+                <img src={sprites[currentSprite].pic} alt="picture" style={{ width: "10vw" }} />
 
                 <IconButton
                     color="primary"
