@@ -39,7 +39,7 @@ export const Game: React.FC<GameProps> = ({}) => {
                 sceneInstance.events.off("gameMenu")
             }
         }
-    }, [sceneInstance])
+    }, [sceneInstance, player])
 
     useEffect(() => {
         if (scene) {

@@ -7,6 +7,8 @@ import { useCharacters } from "../hooks/useCharacters"
 interface PlayerContextContextValue {
     player: Character | undefined
     setPlayer: (player: Character | undefined) => void
+    updateGame: boolean
+    setUpdateGame: (value: boolean) => void
 }
 
 interface PlayerContextProviderProps {
@@ -23,11 +25,14 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
     const { user } = useUser()
 
     const [player, setPlayer] = useState<Character | undefined>(characters[0])
+    const [updateGame, setUpdateGame] = useState(false)
 
     useEffect(() => {
-        if (sceneInstance) sceneInstance?.player?.syncReact(player!)
-
-    }, [player])
+        if (sceneInstance && updateGame && player) {
+            sceneInstance.player?.syncReact(player)
+            setUpdateGame(false)
+        }
+    }, [updateGame])
 
     useEffect(() => {
         if (user && sceneInstance) {
@@ -47,5 +52,9 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
         }
     }, [user, sceneInstance])
 
-    return <PlayerContextContext.Provider value={{ player, setPlayer }}>{children}</PlayerContextContext.Provider>
+    return (
+        <PlayerContextContext.Provider value={{ player, setPlayer, updateGame, setUpdateGame }}>
+            {children}
+        </PlayerContextContext.Provider>
+    )
 }

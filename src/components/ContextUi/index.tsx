@@ -8,7 +8,7 @@ interface ContextUiProps {
 }
 
 export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
-    const { setHealth, setLevel, setMaxHealth, setSpeed, setPosition } = usePlayer()
+    const { setHealth, setLevel, setMaxHealth, setSpeed, setPosition, updateGame } = usePlayer()
 
     return (
         <Box
@@ -45,6 +45,7 @@ export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
                 const initialValues = { stat: stat.value }
                 const handleSubmit = (values: { stat: number }) => {
                     stat.set(values.stat)
+                    updateGame()
                 }
 
                 return (

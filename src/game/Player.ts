@@ -58,6 +58,7 @@ export class Player {
 
     syncReact(player: Character): void {
         this.stats = player.stats
+        console.log(this.stats.health)
         this.attributes = player.attributes
         this.sprite.setPosition(player.position.x, player.position.y)
     }
