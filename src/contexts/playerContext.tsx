@@ -31,9 +31,19 @@ export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ ch
 
     useEffect(() => {
         if (user && sceneInstance) {
-            sceneInstance.player!.user = user
-            console.log("called game websocket connection")
-            sceneInstance.connectWebSocket()
+            if (!sceneInstance.player) {
+                const interval = setInterval(() => {
+                    if (sceneInstance.player) {
+                        sceneInstance.player.user = user
+                        console.log("called game websocket connection")
+                        sceneInstance.connectWebSocket()
+
+                        clearInterval(interval)
+                    }
+                }, 500)
+
+                return () => clearInterval(interval)
+            }
         }
     }, [user, sceneInstance])
 
