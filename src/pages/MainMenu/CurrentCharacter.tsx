@@ -24,19 +24,19 @@ export const CurrentCharacter: React.FC<CurrentCharacterProps> = ({ character })
                         <p>speed: {character.stats.speed}</p>
                         <p style={{ color: theme.palette.warning.main }}>
                             life: {character.stats.life.max} ({character.stats.regeneration.life > 0 && "+"}
-                            {character.stats.regeneration.life})
+                            {character.stats.regeneration.life.toFixed(2)})
                         </p>
                         <p style={{ color: theme.palette.success.main }}>
                             stamina: {character.stats.stamina.max} ({character.stats.regeneration.stamina > 0 && "+"}
-                            {character.stats.regeneration.stamina})
+                            {character.stats.regeneration.stamina.toFixed(2)})
                         </p>
                         <p style={{ color: theme.palette.info.main }}>
                             mana: {character.stats.mana.max} ({character.stats.regeneration.mana > 0 && "+"}
-                            {character.stats.regeneration.mana})
+                            {character.stats.regeneration.mana.toFixed(2)})
                         </p>
                         <p style={{ color: theme.palette.error.main }}>
                             rage: {character.stats.rage.max} ({character.stats.regeneration.rage > 0 && "+"}
-                            {character.stats.regeneration.rage})
+                            {character.stats.regeneration.rage.toFixed(2)})
                         </p>
                     </Box>
                     <Box
