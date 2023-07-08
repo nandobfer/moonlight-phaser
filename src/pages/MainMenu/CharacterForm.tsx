@@ -54,11 +54,11 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
 
                 life: {
                     current: 20,
-                    max: 100,
+                    max: 100 + 10 * attributes.defence,
                 },
                 rage: {
                     current: 80,
-                    max: 100,
+                    max: 100 + 0.1 * attributes.strength,
                 },
                 stamina: {
                     current: 20,
@@ -66,20 +66,20 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
                 },
                 mana: {
                     current: 20,
-                    max: 100,
+                    max: 100 + 10 * attributes.inteligence,
                 },
 
                 regeneration: {
-                    life: 1,
+                    life: 1 + 0.01 * attributes.defence,
                     rage: -1,
-                    stamina: 10,
-                    mana: 2,
+                    stamina: 10 + 0.05 * attributes.dexterity,
+                    mana: 2 + 0.1 * attributes.inteligence,
                 },
 
                 armor: 0,
                 resistance: {
-                    magical: 0,
-                    physical: 0,
+                    magical: 0 + attributes.defence / 10,
+                    physical: 0 + attributes.defence / 10,
                 },
 
                 block: {
@@ -88,10 +88,10 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
                 },
 
                 attack: {
-                    speed: 1,
+                    speed: 1 + attributes.dexterity,
                     range: 1,
-                    power: 1,
-                    magic: 1,
+                    power: 1 + attributes.strength,
+                    magic: 1 + attributes.inteligence,
                     critical: {
                         chance: 10,
                         multiplier: 2,

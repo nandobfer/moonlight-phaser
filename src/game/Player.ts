@@ -9,7 +9,7 @@ export class Player {
     public attributes: Attributes
     public position: object
     public user: User | null = null
-    private regenInterval: NodeJS.Timer
+    public regenInterval: NodeJS.Timer
 
     constructor(
         player: GamePlayer,

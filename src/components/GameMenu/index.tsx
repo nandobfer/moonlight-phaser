@@ -21,6 +21,7 @@ export const GameMenu: React.FC<GameMenuProps> = ({}) => {
         handleClose()
         // game?.destroy(true, false)
         scene?.socket?.disconnect()
+        clearInterval(scene?.player?.regenInterval)
         navigate("/")
     }
 
