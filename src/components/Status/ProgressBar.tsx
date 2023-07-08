@@ -37,7 +37,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ min, max, color, heigh
                 }}
             >
                 <p>
-                    {min} / {max}
+                    {min.toFixed(0)} / {max}
                 </p>
             </Box>
             <LinearProgress variant="determinate" value={normalise(min)} color={color} sx={progress_style} />

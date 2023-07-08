@@ -34,7 +34,7 @@ export class Player {
             player.position.y * MainScene.TILE_SIZE + offsetY
         )
         this.sprite.setFrame(0)
-        this.regenInterval = setInterval(() => this.regenerate(), 1000)
+        this.regenInterval = setInterval(() => this.regenerate(), 100)
     }
 
     stopAnimation() {
@@ -95,7 +95,7 @@ export class Player {
 
     statRegen(_stat: "life" | "mana" | "stamina" | "rage") {
         const stat = this.stats[_stat]
-        const regen = this.stats.regeneration[_stat]
+        const regen = this.stats.regeneration[_stat] / 10
         if (stat.current < stat.max || stat.current > 0) {
             if (stat.current + regen > stat.max) {
                 stat.current = stat.max
