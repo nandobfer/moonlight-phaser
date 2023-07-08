@@ -33,10 +33,7 @@ declare interface Resource {
     max: number
 }
 
-declare interface Stats {
-    level: number
-    speed: number
-
+declare interface BaseStats {
     life: Resource
     stamina: Resource
     mana: Resource
@@ -46,8 +43,14 @@ declare interface Stats {
 
     armor: number
     resistance: Resistance
+    attack: Attack
+}
+
+declare interface Stats extends BaseStats {
+    base: BaseStats
+
+    level: number
+    speed: number
 
     block: Block
-
-    attack: Attack
 }

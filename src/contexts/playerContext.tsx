@@ -3,6 +3,7 @@ import React from "react"
 import { useGame } from "../hooks/useGame"
 import { useUser } from "../hooks/useUser"
 import { useCharacters } from "../hooks/useCharacters"
+import { useAttributesMods } from "../hooks/useAttributesMods"
 
 interface PlayerContextContextValue {
     player: Character | undefined
@@ -20,12 +21,20 @@ const PlayerContextContext = createContext<PlayerContextContextValue>({} as Play
 export default PlayerContextContext
 
 export const PlayerContextProvider: React.FC<PlayerContextProviderProps> = ({ children }) => {
+    const applyAttributes = useAttributesMods()
+
     const { characters } = useCharacters()
     const { sceneInstance } = useGame()
     const { user } = useUser()
 
     const [player, setPlayer] = useState<Character | undefined>(characters[0])
     const [updateGame, setUpdateGame] = useState(false)
+
+    useEffect(() => {
+        if (player?.stats) {
+            setPlayer({ ...player, stats: applyAttributes(player) })
+        }
+    }, [player?.attributes])
 
     useEffect(() => {
         if (sceneInstance && updateGame && player) {
