@@ -4,6 +4,8 @@ import { Container } from "../../components/Container"
 import { images } from "../../images"
 import { SkillOrb } from "../../components/SkillOrb"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import AllInboxIcon from "@mui/icons-material/AllInbox"
+import CycloneIcon from "@mui/icons-material/Cyclone"
 import { useConfirmDialog } from "burgos-confirm"
 import { useCharacters } from "../../hooks/useCharacters"
 import { usePlayer } from "../../hooks/usePlayer"
@@ -32,21 +34,18 @@ export const CharacterContainer: React.FC<CharacterContainerProps> = ({ characte
         })
     }
 
+    const handleInventory = () => {}
+    const handleSkills = () => {}
+
     return (
         <Container
-            label={character.name}
+            label={`${character.name} - ${character.stats.level}`}
             sx={{ width: "100%", cursor: "pointer" }}
             onClick={onClick}
             focused={player?.id == character.id}
         >
             <Box sx={{ width: "100%", gap: "2vw", alignItems: "center", userSelect: "none" }}>
                 <img src={sprites[character.sprite as 1 | 2].pic} alt="picture" style={{ width: "2vw", flexShrink: 0 }} />
-
-                <Box sx={{ flexDirection: "column", justifyContent: "space-evenly", flexShrink: 0 }}>
-                    <p>level: {character.stats.level}</p>
-                    <p>health: {character.stats.life.max}</p>
-                    <p>speed: {character.stats.speed}</p>
-                </Box>
 
                 <Box sx={{ width: "100%", justifyContent: "space-evenly" }}>
                     <SkillOrb label="Dex" attribute={character.attributes.dexterity} color="success" />
@@ -55,14 +54,32 @@ export const CharacterContainer: React.FC<CharacterContainerProps> = ({ characte
                     <SkillOrb label="Def" attribute={character.attributes.defence} color="warning" />
                 </Box>
 
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ minWidth: 0, minHeight: 0, height: "2.5vw", width: "2.5vw" }}
-                    onClick={handleDelete}
-                >
-                    <DeleteForeverIcon />
-                </Button>
+                <Box sx={{ gap: "1vw" }}>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ minWidth: 0, minHeight: 0, height: "2.5vw", width: "2.5vw" }}
+                        onClick={handleSkills}
+                    >
+                        <CycloneIcon />
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ minWidth: 0, minHeight: 0, height: "2.5vw", width: "2.5vw" }}
+                        onClick={handleInventory}
+                    >
+                        <AllInboxIcon />
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ minWidth: 0, minHeight: 0, height: "2.5vw", width: "2.5vw" }}
+                        onClick={handleDelete}
+                    >
+                        <DeleteForeverIcon />
+                    </Button>
+                </Box>
             </Box>
         </Container>
     )
