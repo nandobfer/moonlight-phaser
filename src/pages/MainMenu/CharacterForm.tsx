@@ -58,9 +58,9 @@ export const CharacterForm: React.FC<CharacterFormProps> = ({ finish }) => {
                 maxMana: 100,
 
                 life: 100,
-                rage: 100,
-                stamina: 100,
-                mana: 100,
+                rage: 20,
+                stamina: 20,
+                mana: 20,
 
                 regeneration: {
                     life: 1,

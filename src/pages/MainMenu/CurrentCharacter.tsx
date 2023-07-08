@@ -15,15 +15,13 @@ export const CurrentCharacter: React.FC<CurrentCharacterProps> = ({ character })
     const { sprites } = images
 
     return (
-        <Container label={character.name} sx={{ width: "100%", gap: "2vw", flexShrink: 0, flexGrow: 0 }}>
-            <img src={sprites[character.sprite as 1 | 2].pic} alt="picture" style={{ width: "10vw", flexShrink: 0 }} />
+        <Container label={character.name} sx={{ width: "100%", gap: "1vw", flexShrink: 0, flexGrow: 0 }}>
+            <img src={sprites[character.sprite as 1 | 2].pic} alt="picture" style={{ width: "7vw", flexShrink: 0 }} />
             <Box sx={{ gap: "2vw", width: "100%", flexDirection: "column" }}>
-                <Box sx={{ justifyContent: "space-between", fontSize: "0.9vw" }}>
-                    <Box sx={{ flexDirection: "column", gap: "2vw", flexShrink: 0, justifyContent: "center" }}>
+                <Box sx={{ justifyContent: "space-between", fontSize: "0.8vw" }}>
+                    <Box sx={{ flexDirection: "column", flexShrink: 0, justifyContent: "space-between" }}>
                         <p>level: {character.stats.level}</p>
                         <p>speed: {character.stats.speed}</p>
-                    </Box>
-                    <Box sx={{ flexDirection: "column", flexShrink: 0, justifyContent: "space-between" }}>
                         <p style={{ color: theme.palette.warning.main }}>
                             life: {character.stats.life} (+{character.stats.regeneration.life})
                         </p>
@@ -36,6 +34,27 @@ export const CurrentCharacter: React.FC<CurrentCharacterProps> = ({ character })
                         <p style={{ color: theme.palette.error.main }}>
                             rage: {character.stats.rage} (+{character.stats.regeneration.rage})
                         </p>
+                    </Box>
+                    <Box
+                        sx={{
+                            flexDirection: "column",
+                            flexShrink: 0,
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <p style={{ color: theme.palette.warning.main }}>armor: {character.stats.armor}</p>
+                        <p>physical resistance: {character.stats.resistance.physical}</p>
+                        <p>magical resistance: {character.stats.resistance.magical}</p>
+                        <p>block chance: {character.stats.block.chance}</p>
+                        <p>block value: {character.stats.block.value}</p>
+                    </Box>
+                    <Box sx={{ flexDirection: "column", flexShrink: 0, justifyContent: "space-between" }}>
+                        <p style={{ color: theme.palette.error.main }}>attack power: {character.stats.attack.power}</p>
+                        <p style={{ color: theme.palette.info.main }}>magical power: {character.stats.attack.magic}</p>
+                        <p style={{ color: theme.palette.success.main }}>attack speed: {character.stats.attack.speed}</p>
+                        <p>attack range: {character.stats.attack.range}</p>
+                        <p>critical chance: {character.stats.attack.critical.chance}</p>
+                        <p>critical multiplier: {character.stats.attack.critical.multiplier}</p>
                     </Box>
                 </Box>
 
