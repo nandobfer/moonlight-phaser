@@ -10,6 +10,7 @@ export class Player {
     public position: object
     public user: User | null = null
     public regenInterval: NodeJS.Timer
+    private nameObj: Phaser.GameObjects.Text
 
     constructor(
         player: GamePlayer,
@@ -35,6 +36,8 @@ export class Player {
         )
         this.sprite.setFrame(0)
         this.regenInterval = setInterval(() => this.regenerate(), 100)
+
+        this.nameObj = scene.add.text(player.position.x, player.position.y - 60, player.name)
     }
 
     stopAnimation() {
@@ -56,6 +59,7 @@ export class Player {
     setPosition(position: Phaser.Math.Vector2): void {
         this.sprite.setPosition(position.x, position.y)
         this.scene.events.emit("setPosition", { x: position.x, y: position.y })
+        this.nameObj.setPosition(position.x - 15, position.y - 110)
     }
 
     syncReact(player: Character): void {

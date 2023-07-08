@@ -82,6 +82,7 @@ export default class MainScene extends Phaser.Scene {
         this.createPlayerAnimation(Direction.RIGHT, 4, 7)
         this.createPlayerAnimation(Direction.DOWN, 0, 3)
         this.createPlayerAnimation(Direction.LEFT, 4, 7)
+
     }
 
     newPlayer(player: GamePlayer, user: User) {
