@@ -9,12 +9,14 @@ import { CurrentCharacter } from "./CurrentCharacter"
 import { CharacterForm } from "./CharacterForm"
 import { useCharacters } from "../../hooks/useCharacters"
 import { CharacterContainer } from "./CharacterContainer"
+import { useReset } from "../../hooks/useReset"
 
 interface MainMenuProps {}
 
 export const MainMenu: React.FC<MainMenuProps> = ({}) => {
     const navigate = useNavigate()
     const player = usePlayer()
+    const reset = useReset()
 
     const { characters } = useCharacters()
 
@@ -67,6 +69,9 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                             </Button>
                             <Button variant="contained" onClick={() => handleLogin()} disabled={!player.id}>
                                 multiplayer
+                            </Button>
+                            <Button variant="outlined" onClick={() => reset()} disabled={!player.id}>
+                                reset data
                             </Button>
                         </>
                     )}
