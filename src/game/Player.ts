@@ -9,6 +9,7 @@ export class Player {
     public attributes: Attributes
     public position: object
     public user: User | null = null
+    private regenInterval: NodeJS.Timer
 
     constructor(
         player: GamePlayer,
@@ -33,6 +34,7 @@ export class Player {
             player.position.y * MainScene.TILE_SIZE + offsetY
         )
         this.sprite.setFrame(0)
+        this.regenInterval = setInterval(() => this.regenerate(), 1000)
     }
 
     stopAnimation() {
@@ -87,6 +89,30 @@ export class Player {
     }
 
     destroy() {
+        clearInterval(this.regenInterval)
         this.sprite.destroy()
+    }
+
+    statRegen(_stat: "life" | "mana" | "stamina" | "rage") {
+        const stat = this.stats[_stat]
+        const regen = this.stats.regeneration[_stat]
+        if (stat.current < stat.max || stat.current > 0) {
+            if (stat.current + regen > stat.max) {
+                stat.current = stat.max
+            } else {
+                if (stat.current + regen < 0) {
+                    stat.current = 0
+                } else {
+                    stat.current += regen
+                }
+            }
+        }
+    }
+
+    regenerate() {
+        Object.entries(this.stats.regeneration).map(([key, value]) =>
+            this.statRegen(key as "life" | "mana" | "stamina" | "rage")
+        )
+        this.scene.events.emit("regeneration", this.stats)
     }
 }

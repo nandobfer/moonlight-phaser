@@ -32,6 +32,10 @@ export const Game: React.FC<GameProps> = ({}) => {
             sceneInstance.events.on("ready", () => {
                 sceneInstance.instanciateCharacter(player as Character)
             })
+
+            sceneInstance.events.on("regeneration", (stats: Stats) => {
+                player.handleRegeneration(stats)
+            })
         }
 
         return () => {

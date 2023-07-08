@@ -28,19 +28,19 @@ declare interface Attack {
     critical: Critical
 }
 
+declare interface Resource {
+    current: number
+    max: number
+}
+
 declare interface Stats {
     level: number
     speed: number
 
-    maxLife: number
-    maxStamina: number
-    maxMana: number
-    maxRage: number
-
-    life: number
-    stamina: number
-    mana: number
-    rage: number
+    life: Resource
+    stamina: Resource
+    mana: Resource
+    rage: Resource
 
     regeneration: Regeneration
 

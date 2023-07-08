@@ -23,16 +23,20 @@ export const CurrentCharacter: React.FC<CurrentCharacterProps> = ({ character })
                         <p>level: {character.stats.level}</p>
                         <p>speed: {character.stats.speed}</p>
                         <p style={{ color: theme.palette.warning.main }}>
-                            life: {character.stats.life} (+{character.stats.regeneration.life})
+                            life: {character.stats.life.max} ({character.stats.regeneration.life > 0 && "+"}
+                            {character.stats.regeneration.life})
                         </p>
                         <p style={{ color: theme.palette.success.main }}>
-                            stamina: {character.stats.stamina} (+{character.stats.regeneration.stamina})
+                            stamina: {character.stats.stamina.max} ({character.stats.regeneration.stamina > 0 && "+"}
+                            {character.stats.regeneration.stamina})
                         </p>
                         <p style={{ color: theme.palette.info.main }}>
-                            mana: {character.stats.mana} (+{character.stats.regeneration.mana})
+                            mana: {character.stats.mana.max} ({character.stats.regeneration.mana > 0 && "+"}
+                            {character.stats.regeneration.mana})
                         </p>
                         <p style={{ color: theme.palette.error.main }}>
-                            rage: {character.stats.rage} (+{character.stats.regeneration.rage})
+                            rage: {character.stats.rage.max} ({character.stats.regeneration.rage > 0 && "+"}
+                            {character.stats.regeneration.rage})
                         </p>
                     </Box>
                     <Box

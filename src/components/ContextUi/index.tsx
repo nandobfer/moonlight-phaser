@@ -8,7 +8,7 @@ interface ContextUiProps {
 }
 
 export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
-    const { setHealth, setLevel, setMaxHealth, setSpeed, setPosition, updateGame } = usePlayer()
+    const { setPosition, updateGame } = usePlayer()
 
     return (
         <Box
@@ -21,63 +21,6 @@ export const ContextUi: React.FC<ContextUiProps> = ({ player }) => {
                 width: "30vw",
                 gap: "1vw",
             }}
-        >
-            {[
-                {
-                    id: 1,
-                    value: player.stats.life,
-                    set: setHealth,
-                    name: "health",
-                },
-                {
-                    id: 2,
-                    value: player.stats.maxLife,
-                    set: setMaxHealth,
-                    name: "max health",
-                },
-                {
-                    id: 3,
-                    value: player.stats.speed,
-                    set: setSpeed,
-                    name: "speed",
-                },
-            ].map((stat) => {
-                const initialValues = { stat: stat.value }
-                const handleSubmit = (values: { stat: number }) => {
-                    stat.set(values.stat)
-                    updateGame()
-                }
-
-                return (
-                    <Formik initialValues={initialValues} onSubmit={handleSubmit} key={stat.id} enableReinitialize>
-                        {({ values, handleChange }) => (
-                            <Form style={{ display: "flex" }}>
-                                <TextField
-                                    label={stat.name}
-                                    name="stat"
-                                    value={values.stat}
-                                    onChange={handleChange}
-                                    type="number"
-                                    fullWidth
-                                    variant="standard"
-                                />
-                            </Form>
-                        )}
-                    </Formik>
-                )
-            })}
-
-            <Formik initialValues={player.position} onSubmit={(values) => setPosition(values)} enableReinitialize>
-                {({ values, handleChange }) => (
-                    <Form style={{ display: "flex", flexDirection: "row", gap: "1vw" }}>
-                        <TextField label={"x"} name="x" value={values.x} onChange={handleChange} variant="standard" />
-                        <TextField label={"y"} name="y" value={values.y} onChange={handleChange} variant="standard" />
-                        <Button type="submit" sx={{}} variant="contained">
-                            ok
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
-        </Box>
+        ></Box>
     )
 }
