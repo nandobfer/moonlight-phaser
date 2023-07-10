@@ -1,7 +1,7 @@
 import { Box, Button, Paper, TextField } from "@mui/material"
 import React, { useState, useEffect } from "react"
 import Moonlight from "../../assets/moonlight.png"
-import { useNavigate } from "react-router-dom"
+import { Route, Routes, useNavigate } from "react-router-dom"
 import { LoginForm } from "../../components/LoginForm"
 import { usePlayer } from "../../hooks/usePlayer"
 import colors from "../../colors"
@@ -10,6 +10,7 @@ import { CharacterForm } from "./CharacterForm"
 import { useCharacters } from "../../hooks/useCharacters"
 import { CharacterContainer } from "./CharacterContainer"
 import { useReset } from "../../hooks/useReset"
+import { RoomList } from "./RoomList"
 
 interface MainMenuProps {}
 
@@ -20,8 +21,6 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
 
     const { characters } = useCharacters()
 
-    const [logging, setLogging] = useState(false)
-    const [loading, setLoading] = useState(false)
     const [creatingCharacter, setCreatingCharacter] = useState(!player.id)
 
     const handlePlay = () => {
@@ -29,11 +28,11 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
     }
 
     const handleCancelLogin = () => {
-        setLogging(false)
+        navigate("/")
     }
 
     const handleLogin = () => {
-        setLogging(true)
+        navigate("/login")
     }
 
     useEffect(() => {
@@ -60,21 +59,26 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                     }}
                 />
                 <Box sx={{ width: "20vw", gap: "1vw", flexDirection: "column" }}>
-                    {logging ? (
-                        <LoginForm handleCancelLogin={handleCancelLogin} />
-                    ) : (
-                        <>
-                            <Button variant="contained" onClick={() => handlePlay()} disabled={!player.id}>
-                                singleplayer
-                            </Button>
-                            <Button variant="contained" onClick={() => handleLogin()} disabled={!player.id}>
-                                multiplayer
-                            </Button>
-                            <Button variant="outlined" onClick={() => reset()} disabled={!player.id}>
-                                reset data
-                            </Button>
-                        </>
-                    )}
+                    <Routes>
+                        <Route
+                            index
+                            element={
+                                <>
+                                    <Button variant="contained" onClick={() => handlePlay()} disabled={!player.id}>
+                                        singleplayer
+                                    </Button>
+                                    <Button variant="contained" onClick={() => handleLogin()} disabled={!player.id}>
+                                        multiplayer
+                                    </Button>
+                                    <Button variant="outlined" onClick={() => reset()} disabled={!player.id}>
+                                        reset data
+                                    </Button>
+                                </>
+                            }
+                        />
+                        <Route path="login/" element={<LoginForm />} />
+                        <Route path="rooms/" element={<RoomList />} />
+                    </Routes>
                 </Box>
             </Paper>
 
@@ -105,11 +109,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({}) => {
                         }}
                     >
                         {characters.map((character) => (
-                            <CharacterContainer
-                                key={character.id}
-                                character={character}
-                                onClick={() => player.setPlayer(character)}
-                            />
+                            <CharacterContainer key={character.id} character={character} onClick={() => player.setPlayer(character)} />
                         ))}
                     </Box>
                 </Paper>

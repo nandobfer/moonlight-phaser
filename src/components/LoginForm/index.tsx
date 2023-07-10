@@ -1,26 +1,24 @@
 import { Box, Button, Card, CircularProgress, Container, Paper, TextField } from "@mui/material"
 import { Form, Formik } from "formik"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useApi } from "../../hooks/useApi"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../../hooks/useUser"
 
-interface LoginProps {
-    handleCancelLogin: () => void
-}
+interface LoginProps {}
 
 interface LoginFormValues {
     user: string
     password: string
 }
 
-export const LoginForm: React.FC<LoginProps> = ({ handleCancelLogin }) => {
+export const LoginForm: React.FC<LoginProps> = ({}) => {
     const api = useApi()
     const navigate = useNavigate()
     // const websocket = useWebsocket()
 
-    const { setUser } = useUser()
+    const { user, setUser } = useUser()
     const { snackbar } = useSnackbar()
 
     const [loading, setLoading] = useState(false)
@@ -29,6 +27,8 @@ export const LoginForm: React.FC<LoginProps> = ({ handleCancelLogin }) => {
         user: "",
         password: "",
     }
+
+    const handleCancelLogin = () => navigate("/")
 
     const handleSubmit = (values: LoginFormValues) => {
         if (loading) return
@@ -39,7 +39,7 @@ export const LoginForm: React.FC<LoginProps> = ({ handleCancelLogin }) => {
             callback: (response: { data: User }) => {
                 const user = response.data
                 if (user) {
-                    navigate("/game")
+                    navigate("/rooms")
                     setUser(user)
                     // websocket.send({ connect: { user } })
                 } else {
@@ -53,19 +53,18 @@ export const LoginForm: React.FC<LoginProps> = ({ handleCancelLogin }) => {
         })
     }
 
+    useEffect(() => {
+        if (user) {
+            navigate("/rooms")
+        }
+    }, [])
+
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw" }}>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form style={{ display: "contents" }}>
-                        <TextField
-                            label="user"
-                            name="user"
-                            value={values.user}
-                            onChange={handleChange}
-                            required
-                            autoComplete="off"
-                        />
+                        <TextField label="user" name="user" value={values.user} onChange={handleChange} required autoComplete="off" />
                         <TextField
                             label="password"
                             name="password"

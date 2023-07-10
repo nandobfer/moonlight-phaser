@@ -1,3 +1,4 @@
+import { socket } from "../io"
 import MainScene from "./mainScene"
 import { Player } from "./Player"
 import { io, Socket as SocketType } from "socket.io-client"
@@ -9,12 +10,12 @@ export class Socket {
     public ready: boolean = false
 
     constructor(game: MainScene) {
-        this.io = io("wss://app.agenciaboz.com.br:4103")
+        this.io = socket
         this.game = game
         this.player = this.game.player!
 
         this.io.on("connect", () => {
-            this.io.emit("player:new", this.getClient())
+            // this.io.emit("player:new", this.getClient())
         })
 
         this.io.on("player:disconnect", (client: Client) => {
