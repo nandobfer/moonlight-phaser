@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { Player } from "./Player"
+import { Entity, Player } from "./Player"
 import playerSprite from "../assets/characters.png"
 import map from "../assets/map.jpg"
 import map2 from "../assets/map2.jpg"
@@ -24,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
     private gridControls!: GridControls
     private gridPhysics!: GridPhysics
     public ready = false
-    public players: Player[] = []
+    public players: Entity[] = []
     public socket: Socket | null = null
 
     constructor() {
@@ -82,7 +82,6 @@ export default class MainScene extends Phaser.Scene {
         this.createPlayerAnimation(Direction.RIGHT, 4, 7)
         this.createPlayerAnimation(Direction.DOWN, 0, 3)
         this.createPlayerAnimation(Direction.LEFT, 4, 7)
-
     }
 
     newPlayer(player: GamePlayer, user: User) {
@@ -90,6 +89,16 @@ export default class MainScene extends Phaser.Scene {
         playerSprite.setDepth(2)
         playerSprite.scale = 3
         const newPlayer = new Player(player, playerSprite, new Phaser.Math.Vector2(6, 6), this)
+        newPlayer.user = user
+
+        this.players.push(newPlayer)
+    }
+
+    newEntity(player: GamePlayer, user: User) {
+        const playerSprite = this.add.sprite(0, 0, `player:${player.sprite}`)
+        playerSprite.setDepth(2)
+        playerSprite.scale = 3
+        const newPlayer = new Entity(player, playerSprite, new Phaser.Math.Vector2(6, 6), this)
         newPlayer.user = user
 
         this.players.push(newPlayer)

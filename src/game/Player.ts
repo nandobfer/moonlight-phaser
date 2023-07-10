@@ -1,7 +1,7 @@
 import { Direction } from "./Direction"
 import MainScene from "./mainScene"
 
-export class Player {
+export class Entity {
     public id: number
     public spriteId: number
     public name: string
@@ -9,15 +9,9 @@ export class Player {
     public attributes: Attributes
     public position: object
     public user: User | null = null
-    public regenInterval: NodeJS.Timer
     private nameObj: Phaser.GameObjects.Text
 
-    constructor(
-        player: GamePlayer,
-        private sprite: Phaser.GameObjects.Sprite,
-        private tilePos: Phaser.Math.Vector2,
-        private scene: MainScene
-    ) {
+    constructor(player: GamePlayer, public sprite: Phaser.GameObjects.Sprite, private tilePos: Phaser.Math.Vector2, public scene: MainScene) {
         const offsetX = MainScene.TILE_SIZE / 2
         const offsetY = MainScene.TILE_SIZE
 
@@ -30,12 +24,8 @@ export class Player {
         this.position = player.position
 
         this.sprite.setOrigin(0.5, 1)
-        this.sprite.setPosition(
-            player.position.x * MainScene.TILE_SIZE + offsetX,
-            player.position.y * MainScene.TILE_SIZE + offsetY
-        )
+        this.sprite.setPosition(player.position.x * MainScene.TILE_SIZE + offsetX, player.position.y * MainScene.TILE_SIZE + offsetY)
         this.sprite.setFrame(0)
-        this.regenInterval = setInterval(() => this.regenerate(), 100)
 
         this.nameObj = scene.add.text(player.position.x, player.position.y - 60, player.name)
     }
@@ -86,14 +76,13 @@ export class Player {
     }
 
     syncPlayer(player: GamePlayer) {
-        this.stats = player.stats
+        // this.stats = player.stats
         this.attributes = player.attributes
         this.position = player.position
         this.sprite.setPosition(player.position.x, player.position.y)
     }
 
     destroy() {
-        clearInterval(this.regenInterval)
         this.sprite.destroy()
     }
 
@@ -112,11 +101,23 @@ export class Player {
             }
         }
     }
+}
+
+export class Player extends Entity {
+    public regenInterval: NodeJS.Timer
+
+    constructor(player: GamePlayer, sprite: Phaser.GameObjects.Sprite, tilePos: Phaser.Math.Vector2, scene: MainScene) {
+        super(player, sprite, tilePos, scene)
+        this.regenInterval = setInterval(() => this.regenerate(), 100)
+    }
+
+    destroy(): void {
+        clearInterval(this.regenInterval)
+        this.sprite.destroy()
+    }
 
     regenerate() {
-        Object.entries(this.stats.regeneration).map(([key, value]) =>
-            this.statRegen(key as "life" | "mana" | "stamina" | "rage")
-        )
+        Object.entries(this.stats.regeneration).map(([key, value]) => this.statRegen(key as "life" | "mana" | "stamina" | "rage"))
         this.scene.events.emit("regeneration", this.stats)
     }
 }

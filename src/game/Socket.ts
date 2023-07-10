@@ -27,13 +27,13 @@ export class Socket {
 
         this.io.on("players", (clients: Client[]) => {
             clients.map((client) => {
-                this.game.newPlayer(client.player, client.user)
+                this.game.newEntity(client.player, client.user)
             })
             this.ready = true
         })
 
         this.io.on("player:new", (client: Client) => {
-            this.game.newPlayer(client.player, client.user)
+            this.game.newEntity(client.player, client.user)
         })
 
         this.io.on("player:sync", (clients: Client[]) => {
